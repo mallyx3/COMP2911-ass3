@@ -2,7 +2,152 @@
 
 Epics:
 
-1)	User can put piece into board.
-2) 	User can chose colour at beginning of game.
-3)	 	User can chose collumn for each turn.
-4 EPIC 	) 	User can be informed when game is finished. 
+1)			User can put piece into board. //
+2) 			User can chose colour at beginning of game. //
+3)			User can chose collumn for each turn. //
+4  	EPIC) 	User can be informed when game is finished. //
+5)			User can pick AI difficulty. //
+6)			User can chose to to play AI game / two human game.//
+7	EPIC)	User can view board. //
+
+8)			User can set theme. //
+9)			User can change board size.//
+10)			User can change game rules.	//
+11)			User can use AI's prediction.
+12)			User can restart the game.  //
+13)			User can save and reload game. //
+
+
+------------------------------------------------
+No.:			1 <---
+Task:			Generate blank board
+Difficulty:		1
+Time:			1
+Dependent on:	9
+Comment:		Create a 2d array, null, p1, p2
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			2 <---
+Task:			Add piece to board
+Difficulty:		1
+Time:			1
+Comment:		Work out collumn height, place
+				into correct height cell.
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			3 <---
+Task:			Determine Win
+Difficulty:		4
+Time:			3
+Dependent on:	1,2,4
+Comment:		Vert. Hor. Diag. checking after 
+				each turn. Counter, down from 4
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			4 <---
+Task:			Choose Colour
+Difficulty:		1
+Time:			1
+Dependent on:	5
+Comment:		In player object.
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			5 <---
+Task:			Create Player
+Difficulty:		2
+Time:			1
+Dependent on:	N/A
+Comment:		Player class. Will have array of.
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			6 <---
+Task:			Render board - text.
+Difficulty:		2
+Time:			2
+Dependent on:	1,4,5
+Comment:		Prints current board to console.
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			7
+Task:			Render board - Bitmap
+Difficulty:		5
+Time:			5
+Dependent on:	6
+Comment:		Renders bitmap of board after 
+				move.
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			8
+Task:			Set bitmap theme
+Difficulty:		2
+Time:			2
+Dependent on:	7
+Comment:		Change bitmap theme.
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			9
+Task:			Change board size
+Difficulty:		1
+Time:			1
+Dependent on:	N/A
+Comment:		Just make default to start.
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			10
+Task:			Set custom rules
+Difficulty:		5
+Time:			5
+Dependent on:	N/A
+Comment:		///
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			11
+Task:			Restart Game
+Difficulty:		2
+Time:			3
+Dependent on:	N/A
+Comment:		clear all objects and start again.
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			12
+Task:			Save/Load Game
+Difficulty:		4
+Time:			4
+Dependent on:		//
+Comment:		Save whole state. Load whole state.
+Assigned to:	---
+------------------------------------------------
+
+------------------------------------------------
+No.:			13
+Task:			Use AI
+Difficulty:		5
+Time:			5
+Dependent on:	Everything?
+Comment:		Really hard. Must be done though
+				Broken down later on.
+Assigned to:	---
+------------------------------------------------
+

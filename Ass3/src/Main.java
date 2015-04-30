@@ -73,6 +73,24 @@ public class Main{
 		
 		
 	}
+	
+	public Boolean addPiece(Integer row, Integer x, Integer y, Integer[][] board){
+		Boolean flag = new Boolean(false);
+		//flag will be swapped once piece is placed.
+		//point will be null if no piece, 1 if p1, 2 if p2
+		int xC = 0;
+		int yC = 0;
+		
+		while (!x.equals(row)){
+			while(y > 0){
+				
+			}
+		}
+		
+		
+		
+		return flag;
+	}
 }
 
 

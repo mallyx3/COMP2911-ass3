@@ -151,3 +151,13 @@ Comment:		Really hard. Must be done though
 Assigned to:	---
 ------------------------------------------------
 
+------------------------------------------------
+No.:			14
+Task:			ALlow for 2 human players
+Difficulty:		3
+Time:			4
+Dependent on:	Changing implementation of inputs
+Comment:		Pieces added alternate colours. Need
+				indicator to show turn change.
+Assigned to:	---
+------------------------------------------------

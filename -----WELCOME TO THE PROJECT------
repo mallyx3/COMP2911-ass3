@@ -16,6 +16,7 @@ Epics:
 11)			User can use AI's prediction.
 12)			User can restart the game.  //
 13)			User can save and reload game. //
+14) 		
 
 
 ------------------------------------------------
@@ -151,3 +152,13 @@ Comment:		Really hard. Must be done though
 Assigned to:	---
 ------------------------------------------------
 
+------------------------------------------------
+No.:			14
+Task:			ALlow for 2 human players
+Difficulty:		2
+Time:			4
+Dependent on:	Changing implementation of inputs
+Comment:		Pieces added alternate colours. Need
+				indicator to show turn change.
+Assigned to:	---
+------------------------------------------------

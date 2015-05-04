@@ -1,32 +1,40 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
+/* import java.io.BufferedReader;
+ * import java.io.IOException;
+ * import java.io.InputStreamReader;
+ */
+public class Main {
 
-	/**
-	 * @param args
-	 *
-	 */
-	
-	/*
-	 
-	------------------------------------------------
-	No.:			1 <---
-	Task:			Generate blank board
-	Difficulty:		1
-	Time:			1
-	Dependent on:	9
-	Comment:		Create a 2d array, null, p1, p2
-	Assigned to:	Tom
-	Note: 			In Main
-	------------------------------------------------
-	
-	*/
-public class Main{
-	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		int turnNum = 0;
+		int nextMove;
+		int currPlayer;
+		boolean gameComplete = false;
+		//boolean multiplayer;  will be used to create AI games later
+		Board gameState = new Board(7, 6); // use standard board size
+		Player PlayerOne = new Player(1);
+		Player PlayerTwo = new Player(2);
+		turnNum++;
+		while(!gameComplete){
+			if(turnNum % 2 == 1){
+				currPlayer = 1;
+				nextMove = PlayerOne.getNextAction();
+			} else { // Will contain if statement to use either AI or human player function later
+				currPlayer = 2;
+				nextMove = PlayerTwo.getNextAction(); 
+			}
+			if(gameState.addPiece(nextMove, currPlayer)){ //Check for victory then go to next turn
+				if(gameState.hasWon(currPlayer)){
+					gameComplete = true;
+					System.out.printf("Player %d has won!\n", currPlayer);
+				}
+				turnNum++;
+			} else {
+				System.out.print("Invalid move, not enough space\n");
+			}
+		}
+		/* TODO Auto-generated method stub
+		Kept for use when boards can have different sizes
 		
 		//Ask for the x and y sizes
 		//Modified from code found at http://www.java2s.com/Code/Java/File-Input-Output/ReadastringfromconsoleusingaBufferedReader.htm
@@ -67,32 +75,7 @@ public class Main{
 	      }
 		
 		Integer y = Integer.parseInt(xSize);
-	      
-	     //Now the board array is created.
-		Integer[][] board = new Integer[x][y];
-		
-		
-	}
-	
-	public Boolean addPiece(Integer row, Integer x, Integer y, Integer[][] board){
-		Boolean flag = new Boolean(false);
-		//flag will be swapped once piece is placed.
-		//point will be null if no piece, 1 if p1, 2 if p2
-		int xC = 0;
-		int yC = 0;
-		
-		while (!x.equals(row)){
-			while(y > 0){
-				
-			}
-		}
-		
-		
-		
-		return flag;
+	    Board gameState = new Board(x, y);  	
+	    */
 	}
 }
-
-
-
-

@@ -1,0 +1,3 @@
+﻿Diary Entry Week of 11 May - Ryan Marshall
+Tidied up some code in the player class
+Coded more options for player input

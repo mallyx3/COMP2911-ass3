@@ -1,0 +1,4 @@
+Diary Entry Week of 11 May - Tomas Donovic
+Much progress was made this week.
+A UML diagram was constructed to give a better overview of what needed to be completed within the project.
+I contributed some code allow the project to function, I made the initial commit. I also added code to print the board, although there are issues with the board being rotated 90ºs.

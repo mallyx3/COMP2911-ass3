@@ -1,18 +1,58 @@
 
-
 public class Board {
-	private int[][] boardState;
+	private Integer[][] boardState;
 	private int colSize;
 	private int rowSize;
 	private static int numPieces;
-	
+	private static int DEFAULT_ROW_SIZE = 7;
+	private static int DEFAULT_COL_SIZE = 6;
+
+	public Board(){
+		this.boardState = new Integer[DEFAULT_ROW_SIZE][DEFAULT_COL_SIZE];
+		this.colSize = DEFAULT_COL_SIZE;
+		this.rowSize = DEFAULT_ROW_SIZE;
+		numPieces = 0;
+		int i;
+		int j;
+
+		for (i = 0; i < DEFAULT_ROW_SIZE; i++) {
+			for (j = 0; j < DEFAULT_COL_SIZE; j++) {
+				this.boardState[i][j] = 0;
+			}
+		}
+	}
+
 	public Board(int rowSize, int colSize){
-		this.boardState = new int[rowSize][colSize];
+		this.boardState = new Integer[rowSize][colSize];
 		this.colSize = colSize;
 		this.rowSize = rowSize;
-		this.numPieces = 0;
+		numPieces = 0;
+		int i;
+		int j;
+
+		for (i = 0; i < rowSize; i++) {
+			for (j = 0; j < colSize; j++) {
+				this.boardState[i][j] = 0;
+			}
+		}
 	}
-	//need to check if numPieces is < total num of pieces (42 for 7x6 board)
+
+	public Integer[][] getBoardState (){ return boardState; }
+
+	public int getColSize (){ return colSize; }
+
+	public int getRowSize (){ return rowSize; }
+
+	public int getNumPieces (){ return numPieces; }
+
+	//Should we have this? Seems dangerous if were not updating the boardState at the same time
+	public void setColSize (int colSize) { this.colSize = colSize; }
+	//Should we have this? Seems dangerous if were not updating the boardState at the same time
+	public void setRowSize (int rowSize) { this.rowSize = rowSize; }
+
+	public void setNumPieces (int newNumPieces) { numPieces = newNumPieces; }
+
+	//need to check if numPieces is < total num of pieces (42 for default 7x6 board)
 	public Boolean addPiece(int column, int player){
 		if(column < 0 || column >= colSize){ // shouldn't be necessary in final product but just in case
 			return false;
@@ -33,9 +73,11 @@ public class Board {
 		int i;
 		int j;
 		int winCount;
+
+		//Horizontal check
 		for(i = 0 ; i < rowSize ; i++ ){
 			winCount = 0;
-			for(j = 0; j < rowSize-1; j++){
+			for(j = 0; j < colSize; j++){
 				if(boardState[i][j] == player){
 					winCount++;
 				} else {
@@ -46,10 +88,11 @@ public class Board {
 				}
 			}
 		}
-		for(i = 0 ; i < rowSize ; i++ ){
+		//Vertical check
+		for(i = 0 ; i < colSize ; i++ ){
 			winCount = 0;
-			for(j = 0; j < colSize ; j++){
-				if(boardState[i][j] == player){
+			for(j = 0; j < rowSize ; j++){
+				if(boardState[j][i] == player){
 					winCount++;
 				} else {
 					winCount = 0;
@@ -62,8 +105,8 @@ public class Board {
 		return false;
 	}
 	public void print(){
-		int i = 0;
-		int j = 0;
+		int i;
+		int j;
 		System.out.println("Current Board:");
 		for(i = 0 ; i < rowSize ; i++ ){
 			System.out.print("|");

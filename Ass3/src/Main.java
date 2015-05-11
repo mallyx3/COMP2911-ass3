@@ -8,25 +8,25 @@ public class Main {
 	public static void main(String[] args) {
 		int turnNum = 0;
 		int nextMove;
-		int currPlayer;
+		Player currPlayer;
 		boolean gameComplete = false;
 		//boolean multiplayer;  will be used to create AI games later
-		Board gameState = new Board(7, 6); // use standard board size
-		Player PlayerOne = new Player(1);
-		Player PlayerTwo = new Player(2);
+		Board gameState = new Board(); // use standard board size
+		Player playerOne = new Player("John");
+		Player playerTwo = new Player("Smith");
 		turnNum++;
 		while(!gameComplete){
 			if(turnNum % 2 == 1){
-				currPlayer = 1;
-				nextMove = PlayerOne.getNextAction();
+				currPlayer = playerOne;
+				nextMove = playerOne.getNextAction();
 			} else { // Will contain if statement to use either AI or human player function later
-				currPlayer = 2;
-				nextMove = PlayerTwo.getNextAction(); 
+				currPlayer = playerTwo;
+				nextMove = playerTwo.getNextAction();
 			}
-			if(gameState.addPiece(nextMove, currPlayer)){ //Check for victory then go to next turn
-				if(gameState.hasWon(currPlayer)){
+			if(gameState.addPiece(nextMove, currPlayer.getPlayer())){ //Check for victory then go to next turn
+				if(gameState.hasWon(currPlayer.getPlayer())){
 					gameComplete = true;
-					System.out.printf("Player %d has won!\n", currPlayer);
+					System.out.printf("%s has won!\n", currPlayer.getName());
 				}
 				turnNum++;
 			} else {

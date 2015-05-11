@@ -17,9 +17,11 @@ public class Board {
 		for(int i = 0; i < rowSize;i++){
 			if(boardState[column][i] == 0){
 				boardState[column][i] = player;
+				this.print();
 				return true;
 			}
 		}
+		this.print();
 		return false;
 	}
 
@@ -54,5 +56,18 @@ public class Board {
 			}
 		}
 		return false;
+	}
+	
+	public void print(){
+		int i = 0;
+		int j = 0;
+		System.out.println("Current Board:");
+		for(i = 0 ; i < colSize ; i++ ){
+			System.out.print("|");
+			for(j = 0; j < rowSize ; j++){
+				System.out.print(boardState[i][j] + "|");
+			}
+		System.out.println("");
+		}
 	}
 }

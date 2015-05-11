@@ -26,6 +26,7 @@ public class Player {
 		    System.out.println("IO error trying to get size!");
 		    System.exit(1);
 		}
+		
 		      
 		return Integer.parseInt(turnInput);	      
 	}

@@ -1,0 +1,5 @@
+Diary entry for 11th May - Mitchell Macklin
++ Able to create a framework for the base
++ Made some basic classes for player, AI, Board and main
+- Didn't finish all victory conditions
+- doesn't read input correctly

@@ -13,7 +13,7 @@ public class Main {
 		//boolean multiplayer;  will be used to create AI games later
 		Board gameState = new Board(); // use standard board size
 		Player playerOne = new Player("John");
-		Player playerTwo = new Player("Smith");
+		Player playerTwo = new Player();
 		turnNum++;
 		while(!gameComplete){
 			if(turnNum % 2 == 1){

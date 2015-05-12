@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 public class Player {
+	private int difficulty;
 	boolean isAI = false;
 	private static int playerNum = 0;
 	private int player;
@@ -12,13 +13,32 @@ public class Player {
 	private String name;
 	private final String DEFAULT_PLAYER_ONE_COLOUR = "Red";
 	private final String DEFAULT_PLAYER_TWO_COLOUR = "Yellow";
+	private final int DIFFICULTY_EASY = 0;
+	private final int DIFFICULTY_MEDIUM = 1;
+	private final int DIFFICULTY_HARD = 2;
 
-	//Create AI player
+	//Create AI player with default easy difficulty
 	public Player(){
 		playerNum++;
 		this.name = "AI";
 		this.player = playerNum;
 		this.isAI = true;
+		this.difficulty = DIFFICULTY_EASY;
+
+		if (player == 1) {
+			colour = DEFAULT_PLAYER_ONE_COLOUR;
+		} else {
+			colour = DEFAULT_PLAYER_TWO_COLOUR;
+		}
+	}
+
+	//Create AI player with give difficulty setting
+	public Player(int difficulty){
+		playerNum++;
+		this.name = "AI";
+		this.player = playerNum;
+		this.isAI = true;
+		this.difficulty = difficulty;
 
 		if (player == 1) {
 			colour = DEFAULT_PLAYER_ONE_COLOUR;
@@ -56,12 +76,19 @@ public class Player {
 				System.exit(1);
 			}
 			return Integer.parseInt(turnInput);
-		//Prompt AI for move
-		} else {
+		//Return easy AI move
+		} else if (difficulty == DIFFICULTY_EASY) {
 			Random rand = new Random();
 			return rand.nextInt(6);
+		//Return medium AI move
+		} else if (difficulty == DIFFICULTY_MEDIUM) {
+			//todo need to add code for more complex decisions
+			return 1;
+		//Return hard AI move
+		} else {
+			//todo need to add code for more complex decisions
+			return 2;
 		}
-
 	}
 
 	public int getPlayerNum() { return playerNum; }

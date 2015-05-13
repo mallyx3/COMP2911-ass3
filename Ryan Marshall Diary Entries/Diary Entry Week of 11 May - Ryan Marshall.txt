@@ -6,3 +6,5 @@
 - Added default player colours
 - Added player name
 - Added setter/getter methods for board and player
+- Added random move AI to player class
+- Added difficulty options for AI

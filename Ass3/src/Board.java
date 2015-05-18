@@ -4,8 +4,8 @@ public class Board {
 	private int colSize;
 	private int rowSize;
 	private static int numPieces;
-	private static int DEFAULT_ROW_SIZE = 7;
-	private static int DEFAULT_COL_SIZE = 6;
+	private static int DEFAULT_ROW_SIZE = 6;
+	private static int DEFAULT_COL_SIZE = 7;
 
 	public Board(){
 		this.boardState = new Integer[DEFAULT_ROW_SIZE][DEFAULT_COL_SIZE];

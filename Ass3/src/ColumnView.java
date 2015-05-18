@@ -1,3 +1,5 @@
+package ass3;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,13 +13,6 @@ public class ColumnView extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.WHITE);
-<<<<<<< HEAD
-		g.fillOval(0, 0, 30, 30);
-		
-		
-	}
-}
-=======
 		g.fillOval(30, 15, 90, 90);
 		g.fillOval(30, 165, 90, 90);
 		g.fillOval(30, 315, 90, 90);
@@ -30,4 +25,3 @@ public class ColumnView extends JPanel{
 	
 	
 }
->>>>>>> b2229438e2eb01033792f0197e00479e6f74d083

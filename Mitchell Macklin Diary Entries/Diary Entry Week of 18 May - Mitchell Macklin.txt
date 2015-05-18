@@ -1,0 +1,4 @@
+﻿Diary Entry Week of 18 May - Mitchell Macklin
+
+- Setup a basic idea for UI
+- Attempting to try and paint board and add JPanel buttons for input

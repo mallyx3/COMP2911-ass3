@@ -1,0 +1,7 @@
+Diary Entry Week of 18 May - Tomas Donovic
+The previous week, only limited progress has been made.
+We have done a bit of work protoyping the UI and tring to get that side of things working.
+This mostly consisted of us re-designing the structure of our program since far too much was left in main and not in separete discrete funcitons.
+UI headway was made, buttons were made to enter actions into our CLI, which is some progress, although not enough for this stage.
+
+This week will mostly deal with trying to get the UI finished, since that is the bare minimum to expect for this stage.

@@ -102,8 +102,59 @@ public class Board {
 				}
 			}
 		}
+		
+		int tempi, tempj = 0;
+		i = 0; 
+		j = 0; 
+		while (tempi<rowSize-3) {
+			i = tempi;
+			tempj = 0;
+			while (tempj<colSize-3) {
+				j = tempj;
+				winCount = 0;
+				while (winCount<4) {
+					if(boardState[j][i] == player){
+						winCount++;
+						i++;
+						j++;	
+					} else {
+						break;
+					}
+					if(winCount == 4){
+						return true;
+					}
+				}
+				tempj++;
+			}
+			tempi++;				
+		}
+		
+		tempi = 3; i = 3; tempj = 0; j = 0;
+		while (tempi<rowSize) {
+			i = tempi;
+			tempj = 0;
+			while (tempj<colSize-3) {
+				j = tempj;
+				winCount = 0;
+				while (winCount<4) {
+					if(boardState[i][j] == player){
+						winCount++;
+						i--;
+						j++;	
+					} else {
+						break;
+					}
+					if(winCount == 4){
+						return true;
+					}
+				}
+				tempj++;
+			}
+			tempi++;				
+		}		
 		return false;
 	}
+	
 	public void print(){
 		int i;
 		int j;

@@ -103,7 +103,8 @@ public class Board {
 			}
 		}
 		
-		int tempi, tempj = 0;
+		int tempi = 0;
+		int tempj = 0;
 		i = 0; 
 		j = 0; 
 		while (tempi<rowSize-3) {

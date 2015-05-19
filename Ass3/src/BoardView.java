@@ -1,28 +1,20 @@
-package ass3;
 
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.SpringLayout;
 
 public class BoardView extends JFrame{
-	private Board GameState;
+	private Board gameState;
 	public BoardView(){
 		initBView();
 	}
 	public void initBView(){
 		ArrayList<ColumnView> ColumnList = new ArrayList<ColumnView>();
-		GameState = new Board();
 		
 		for(int i = 0; i < 7;i++){
 			ColumnList.add(new ColumnView());

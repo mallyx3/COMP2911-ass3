@@ -1,14 +1,11 @@
-package ass3;
-
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
-
+@SuppressWarnings("serial")
 public class ColumnView extends JPanel{
+	
 	//private ArrayList<Dimensions> CircleSpots = new ArrayList<Dimensions>();
+	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);

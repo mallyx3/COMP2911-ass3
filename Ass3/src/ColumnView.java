@@ -10,12 +10,13 @@ public class ColumnView extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.WHITE);
-		g.fillOval(30, 15, 90, 90);
-		g.fillOval(30, 165, 90, 90);
-		g.fillOval(30, 315, 90, 90);
-		g.fillOval(30, 465, 90, 90);
-		g.fillOval(30, 615, 90, 90);
-		g.fillOval(30, 765, 90, 90);
+		// offset offset x size y size
+		g.fillOval(30, 10, 90, 90);
+		g.fillOval(30, 110, 90, 90);
+		g.fillOval(30, 220, 90, 90);
+		g.fillOval(30, 330, 90, 90);
+		g.fillOval(30, 440, 90, 90);
+		g.fillOval(30, 550, 90, 90);
 		
 		
 	}

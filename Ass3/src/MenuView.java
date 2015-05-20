@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
@@ -36,8 +37,10 @@ public class MenuView extends JPanel{
 	    secondButton.addActionListener(myListener);
 	    secondButton.addChangeListener(myListener);
 	    secondButton.addItemListener(myListener);
-	    JButton button = new JButton("Start");
-	    button.addActionListener(new ActionListener() {
+	   
+	    
+	    JButton start = new JButton("Start");
+	    start.addActionListener(new ActionListener() {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
@@ -45,11 +48,32 @@ public class MenuView extends JPanel{
                 System.out.println("You clicked the button");
             }
         });   
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    
+        start.setAlignmentX(Component.CENTER_ALIGNMENT);
         
+        JButton reset = new JButton("Reset");
+	    start.addActionListener(new ActionListener() {
+	    	 
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                System.out.println("You clicked the reset");
+            }
+        });   
+	    
+        start.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        
+        JLabel title = new JLabel("cunnukt fore"); 
+        add(title);
         add(firstButton);
     	add(secondButton);
-    	add(button);
+    	add(start);
+    	add(reset);
+    	JLabel footer = new JLabel("we promice it wurks gud");
+    	JLabel version = new JLabel("beeter 9.7");
+    	add(footer);
+    	add(version);
     	
         
 		

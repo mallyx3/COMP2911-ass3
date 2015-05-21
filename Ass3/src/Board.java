@@ -1,19 +1,28 @@
 
+
+
 public class Board {
 	private Integer[][] boardState;
 	private int colSize;
 	private int rowSize;
+	private int player;
+	private Player AI;
 	private static int numPieces;
 	private static int DEFAULT_ROW_SIZE = 6;
 	private static int DEFAULT_COL_SIZE = 7;
+	private boolean AIGame;
 
 	public Board(){
 		this.boardState = new Integer[DEFAULT_ROW_SIZE][DEFAULT_COL_SIZE];
 		this.colSize = DEFAULT_COL_SIZE;
 		this.rowSize = DEFAULT_ROW_SIZE;
+		this.player = 0;
 		numPieces = 0;
 		int i;
 		int j;
+		this.AIGame = false;
+		this.AI = new Player(0);
+		
 
 		for (i = 0; i < DEFAULT_ROW_SIZE; i++) {
 			for (j = 0; j < DEFAULT_COL_SIZE; j++) {
@@ -53,20 +62,25 @@ public class Board {
 	public void setNumPieces (int newNumPieces) { numPieces = newNumPieces; }
 
 	//need to check if numPieces is < total num of pieces (42 for default 7x6 board)
-	public Boolean addPiece(int column, int player){
+	public int addPiece(int column){
 		if(column < 0 || column >= colSize){ // shouldn't be necessary in final product but just in case
-			return false;
+			return -1;
 		}
-		for(int i = rowSize-1; i >= 0;i--){
+		for(int i = 0; i < colSize;i++){
 			if(boardState[i][column] == 0){
+				if(player == 1){
+					player = 2;
+				} else {
+					player = 1;
+				}
 				boardState[i][column] = player;
 				this.print();
 				numPieces++;
-				return true;
+				return i;
 			}
 		}
 		this.print();
-		return false;
+		return -1;
 	}
 
 	public boolean hasWon(int player){
@@ -167,5 +181,11 @@ public class Board {
 			}
 		System.out.println("");
 		}
+	}
+	public int getPlayer(){
+		return player;
+	}
+	public void setPlayer(){
+		player = 1;
 	}
 }

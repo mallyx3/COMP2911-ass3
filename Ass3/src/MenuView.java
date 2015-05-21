@@ -1,3 +1,4 @@
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -11,7 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 @SuppressWarnings("serial")
 public class MenuView extends JPanel{
-	
+	private Board gameState;
+	public MenuView(Board gameState){
+		super();
+		this.gameState = gameState;
+	}
 	//private ArrayList<Dimensions> CircleSpots = new ArrayList<Dimensions>();
 	public Container newContainer(){
 			
@@ -44,7 +49,7 @@ public class MenuView extends JPanel{
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                //Execute when button is pressed
+                
                 System.out.println("You clicked the button");
             }
         });   
@@ -56,7 +61,7 @@ public class MenuView extends JPanel{
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                //Execute when button is pressed
+                
                 System.out.println("You clicked the reset");
             }
         });   

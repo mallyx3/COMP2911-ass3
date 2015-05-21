@@ -1,3 +1,4 @@
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -7,7 +8,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
  /** Listens to the radio buttons. */
-    class RadioListener implements ActionListener, //only one event type needed
+   public class RadioListener implements ActionListener, //only one event type needed
 				   ChangeListener, //for curiosity only
 				   ItemListener {  //for curiosity only
 	public void actionPerformed(ActionEvent e) {

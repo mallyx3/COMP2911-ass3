@@ -1,6 +1,4 @@
 
-
-
 public class Board {
 	private Integer[][] boardState;
 	private int colSize;
@@ -62,9 +60,9 @@ public class Board {
 	public void setNumPieces (int newNumPieces) { numPieces = newNumPieces; }
 
 	//need to check if numPieces is < total num of pieces (42 for default 7x6 board)
-	public int addPiece(int column){
+	public boolean addPiece(int column){
 		if(column < 0 || column >= colSize){ // shouldn't be necessary in final product but just in case
-			return -1;
+			return false;
 		}
 		for(int i = 0; i < colSize;i++){
 			if(boardState[i][column] == 0){
@@ -76,11 +74,11 @@ public class Board {
 				boardState[i][column] = player;
 				this.print();
 				numPieces++;
-				return i;
+				return true;
 			}
 		}
 		this.print();
-		return -1;
+		return false;
 	}
 
 	public boolean hasWon(int player){

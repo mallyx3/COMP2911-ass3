@@ -1,5 +1,4 @@
 
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -28,13 +27,25 @@ public class BoardView extends JFrame{
 		
 		for(int i = 0; i < 7;i++){
 			ColumnList.add(new ColumnView(i, gameState));
-			ColumnList.get(i).setBackground(Color.BLUE);
+			ColumnList.get(i).setBackground(new Color(0,0,200));
 			ColumnList.get(i).setPreferredSize(new Dimension(150,700));
 			ColumnList.get(i).setMaximumSize(new Dimension(150,700));
 			ColumnList.get(i).addMouseListener(new MouseAdapter(){
 				public void mouseReleased(MouseEvent e){
+					if(gameState.hasWon() || gameState.checkDraw()){
+						gameState.toggleGameState(false);
+						for(int i = 0; i < 7; i++){
+							ColumnList.get(i).paintWinPieces();
+						}
+					}
 					if(gameState.isAI()){
 						ColumnList.get(gameState.getAITurn()).paintAITurn();
+						if(gameState.hasWon() || gameState.checkDraw()){
+							gameState.toggleGameState(false);
+							for(int i = 0; i < 7; i++){
+								ColumnList.get(i).paintWinPieces();
+							}
+						}
 					}
 				}
 			});
@@ -57,21 +68,14 @@ public class BoardView extends JFrame{
 		});
 		
 		MenuView menu = new MenuView(gameState);
-		menu.setPreferredSize(new Dimension(150,700));
-		menu.setMaximumSize(new Dimension(150,700));
-		menu.setBackground(Color.GREEN);
-		menu.newContainer();
-		menu.addReset(resetButton);
+		menu.setPreferredSize(new Dimension(200,700));
+		menu.setMaximumSize(new Dimension(200,700));
+		menu.setBackground(Color.LIGHT_GRAY);
+		menu.addContainer(resetButton);
 		Columns.add(menu);
 		
-		
-		
-        
-
-		
-		
 		setTitle("Connect 4");
-        setSize(1200, 700);
+        setSize(1250, 700);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

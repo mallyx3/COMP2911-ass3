@@ -60,27 +60,15 @@ public class Player {
 		}
 	}
 
-	public int getNextAction( ){
+	public int getNextAction(int board[][]){
 		//Prompt player for move
-		if (!this.isAI) {
-			System.out.print("What is your next action?");
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-			String turnInput = null;
-
-			//  read the username from the command-line; need to use try/catch with the
-			//  readLine() method
-			try {
-				turnInput = br.readLine();
-			} catch (IOException ioe) {
-				System.out.println("IO error trying to get size!");
-				System.exit(1);
-			}
-			return Integer.parseInt(turnInput);
-		//Return easy AI move
-		} else if (difficulty == DIFFICULTY_EASY) {
+		if (difficulty == DIFFICULTY_EASY) {
 			Random rand = new Random();
-			return rand.nextInt(6);
+			int i = rand.nextInt(6);
+			while(board[5][i] != 0){
+				i = rand.nextInt(6);
+			}
+			return i;
 		//Return medium AI move
 		} else if (difficulty == DIFFICULTY_MEDIUM) {
 			//todo need to add code for more complex decisions
@@ -111,5 +99,6 @@ public class Player {
 	public void setColour(String colour) { this.colour = colour; }
 
 	public void setName(String name) { this.name = name; }
-
+	
+	public void setDifficulty(int newDifficulty) {this.difficulty = newDifficulty; }
 }

@@ -1,8 +1,10 @@
 
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 @SuppressWarnings("serial")
@@ -10,6 +12,7 @@ public class ColumnView extends JPanel{
 	private int colNum;
 	private Integer[] row;
 	private Board gameState;
+	private boolean backgroundCheck = false;
 	//private ArrayList<Dimensions> CircleSpots = new ArrayList<Dimensions>();
 	public ColumnView(int colNum, Board gameState){
 		super();
@@ -20,24 +23,28 @@ public class ColumnView extends JPanel{
 			row[k] = 0;
 		}
 		addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e){
-				//int i = gameState.addPiece(getCol());
-				//if(i >= 0){
-				//	repaint(30,560-(110*i),90,90);
-				//}
-				
-				
+			public void mouseClicked(MouseEvent e){	
 			}
 			public void mousePressed(MouseEvent e){
+				backgroundCheck = true;
+				if(gameState.isRunning()){
+					setBackground(new Color(0,0,150));
+				}
 				paintPiece();
+			}
+			public void mouseReleased(MouseEvent e){
+				if(gameState.isRunning() && backgroundCheck){
+					setBackground(Color.BLUE);
+				}
 			}
 			public void mouseEntered(MouseEvent e){
 				if(gameState.isRunning()){
-					setBackground(Color.CYAN);
+					setBackground(Color.BLUE);
 				}
 			}
 			public void mouseExited(MouseEvent e){
-				setBackground(Color.BLUE);
+				backgroundCheck = false;
+				setBackground(new Color(0,0,200));
 			}
 		});
 		
@@ -45,17 +52,51 @@ public class ColumnView extends JPanel{
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		ArrayList<Coordinates> winningPieces = gameState.getWinningPieces();
+		boolean isWinPiece;
+		boolean gameFinished = false;
+		if(gameState.checkDraw()){
+			gameFinished = true;
+			setBackground(new Color(0,0,200));
+		}
 		for(int i = 0; i < 6; i++){
+			isWinPiece = false;
+			if(winningPieces.size() == 4){
+				gameFinished = true;
+				setBackground(new Color(0,0,200));
+				for(int j = 0; j < 4; j++){
+					if(winningPieces.get(j).getCol() == colNum && winningPieces.get(j).getRow() == i){
+						isWinPiece = true;
+					}
+				}
+			} 
+			
 			if(row[i] == 1){
-				g.setColor(Color.YELLOW);
+				if(!isWinPiece && gameFinished){
+					g.setColor(new Color(175,175,0));
+				} else {
+					g.setColor(Color.YELLOW);
+				}
 			} else if (row[i] == 2){
-				g.setColor(Color.RED);
-			}else if (row[i] == 3){
-				g.setColor(Color.GREEN);
+				if(!isWinPiece && gameFinished){
+					g.setColor(new Color(175,0,0));
+				} else {
+					g.setColor(Color.RED);
+				}
+			} else if (row[i] == 3){
+				if(!isWinPiece && gameFinished){
+					g.setColor(new Color(0,175,0));
+				} else {
+					g.setColor(Color.GREEN);
+				}
 			} else {
 				g.setColor(Color.WHITE);
 			}
+			
 			g.fillOval(30,560-(110*i),90,90);
+			
+			g.setColor(Color.BLACK);
+			g.drawOval(30,560-(110*i),90,90);
 			
 		}	
 	}
@@ -72,7 +113,7 @@ public class ColumnView extends JPanel{
 				if(row[i] == 0){
 					row[i] = gameState.getPlayer();
 					painted = true;
-					repaint();
+					repaint(30,560-(110*i),90,90);
 				}
 			}
 		}
@@ -81,6 +122,9 @@ public class ColumnView extends JPanel{
 		for(int i = 0;i < 6; i++){
 			row[i] = 0;
 		}
+		repaint();
+	}
+	public void paintWinPieces(){
 		repaint();
 	}
 }

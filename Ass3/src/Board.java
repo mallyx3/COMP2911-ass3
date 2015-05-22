@@ -1,6 +1,9 @@
 
+import java.util.ArrayList;
+
+
 public class Board {
-	private Integer[][] boardState;
+	private int[][] boardState;
 	private int colSize;
 	private int rowSize;
 	private int player;
@@ -11,9 +14,10 @@ public class Board {
 	private static int DEFAULT_COL_SIZE = 7;
 	private boolean AIGame = true;
 	private boolean gameRunning = false;
+	private ArrayList<Coordinates> winningPieces = new ArrayList<Coordinates>();
 
 	public Board(){
-		this.boardState = new Integer[DEFAULT_ROW_SIZE][DEFAULT_COL_SIZE];
+		this.boardState = new int[DEFAULT_ROW_SIZE][DEFAULT_COL_SIZE];
 		this.colSize = DEFAULT_COL_SIZE;
 		this.rowSize = DEFAULT_ROW_SIZE;
 		this.player = 0;
@@ -31,7 +35,7 @@ public class Board {
 	}
 
 	public Board(int rowSize, int colSize){
-		this.boardState = new Integer[rowSize][colSize];
+		this.boardState = new int[rowSize][colSize];
 		this.colSize = colSize;
 		this.rowSize = rowSize;
 		numPieces = 0;
@@ -45,7 +49,7 @@ public class Board {
 		}
 	}
 
-	public Integer[][] getBoardState (){ return boardState; }
+	public int[][] getBoardState (){ return boardState; }
 
 	public int getColSize (){ return colSize; }
 
@@ -68,7 +72,7 @@ public class Board {
 		if(column < 0 || column >= colSize){ // shouldn't be necessary in final product but just in case
 			return false;
 		}
-		for(int i = 0; i < colSize;i++){
+		for(int i = 0; i < rowSize;i++){
 			if(boardState[i][column] == 0){
 				if (player == 1){
 					player = 2;
@@ -87,7 +91,8 @@ public class Board {
 		return false;
 	}
 
-	public boolean hasWon(int player){
+	public boolean hasWon(){
+		winningPieces = new ArrayList<Coordinates>();
 		int i;
 		int j;
 		int winCount;
@@ -98,8 +103,10 @@ public class Board {
 			for(j = 0; j < colSize; j++){
 				if(boardState[i][j] == player){
 					winCount++;
+					winningPieces.add(new Coordinates(i,j));
 				} else {
 					winCount = 0;
+					winningPieces.clear();
 				}
 				if(winCount == 4){
 					return true;
@@ -112,8 +119,10 @@ public class Board {
 			for(j = 0; j < rowSize ; j++){
 				if(boardState[j][i] == player){
 					winCount++;
+					winningPieces.add(new Coordinates(j,i));
 				} else {
 					winCount = 0;
+					winningPieces.clear();
 				}
 				if(winCount == 4){
 					return true;
@@ -131,9 +140,11 @@ public class Board {
 			while (tempj<colSize-3) {
 				j = tempj;
 				winCount = 0;
-				while (winCount<4) {
-					if(boardState[j][i] == player){
+				winningPieces.clear();
+				while (winCount<4 && i < rowSize && j < colSize) {
+					if(boardState[i][j] == player){
 						winCount++;
+						winningPieces.add(new Coordinates(i,j));
 						i++;
 						j++;	
 					} else {
@@ -155,9 +166,11 @@ public class Board {
 			while (tempj<colSize-3) {
 				j = tempj;
 				winCount = 0;
-				while (winCount<4) {
+				winningPieces.clear();
+				while (winCount<4 && i >= 0) {
 					if(boardState[i][j] == player){
 						winCount++;
+						winningPieces.add(new Coordinates(i,j));
 						i--;
 						j++;	
 					} else {
@@ -171,9 +184,16 @@ public class Board {
 			}
 			tempi++;				
 		}		
+		winningPieces.clear();
 		return false;
 	}
-	
+	public boolean checkDraw(){
+		if(numPieces == 42){
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public void print(){
 		int i;
 		int j;
@@ -196,21 +216,20 @@ public class Board {
 		return AIGame;
 	}
 	public int getAITurn(){
-		return AI.getNextAction();
+		return AI.getNextAction(boardState);
 	}
-	public void turnOnAI(){
+	public void toggleAI(boolean AItoggle){
 		if(!gameRunning){
-			AIGame = true;
+			AIGame = AItoggle;
 		}
 	}
-	public void turnOffAI(){
-		if(!gameRunning){
-			AIGame = false;
+	public void toggleGameState(boolean running){
+		if(running){
+			winningPieces.clear();
 		}
+		gameRunning = running;
 	}
-	public void startGame(){
-		gameRunning = true;
-	}
+	
 	public void resetGame(){
 		gameRunning = false;
 		for (int i = 0; i < rowSize; i++){
@@ -218,15 +237,19 @@ public class Board {
 				boardState[i][j] = 0;
 			}
 		}
+		numPieces = 0;
 		player = 0;
 	}
 	public boolean isRunning(){
 		return gameRunning;
 	}
-	public void twoPlayer(){
-		numPlayers = 2;
+	public void setPlayerNum(int players){
+		numPlayers = players;
 	}
-	public void threePlayer(){
-		numPlayers = 3;
+	public void setAI(int difficulty){
+		AI.setDifficulty(difficulty);
+	}
+	public ArrayList<Coordinates> getWinningPieces(){
+		return winningPieces;
 	}
 }

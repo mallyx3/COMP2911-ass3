@@ -49,7 +49,7 @@ public class MenuView extends JPanel{
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                
+                gameState.setAI();
                 System.out.println("You clicked the button");
             }
         });   
@@ -84,10 +84,6 @@ public class MenuView extends JPanel{
 		
 		return menu;
 		
-	}
-	
-	
-	
-	
-	
+	}	
 }
+

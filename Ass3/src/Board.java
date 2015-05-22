@@ -1,4 +1,3 @@
-
 public class Board {
 	private Integer[][] boardState;
 	private int colSize;
@@ -185,5 +184,14 @@ public class Board {
 	}
 	public void setPlayer(){
 		player = 1;
+	}
+	public boolean isAI(){
+		return AIGame;
+	}
+	public int getAITurn(){
+		return AI.getNextAction();
+	}
+	public void setAI(){
+		AIGame = true;
 	}
 }

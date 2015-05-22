@@ -30,16 +30,7 @@ public class ColumnView extends JPanel{
 				
 			}
 			public void mousePressed(MouseEvent e){
-				if(gameState.addPiece(getCol())){
-					boolean painted = false;
-					for(int i = 0; i < 6 && !painted;i++){
-						if(row[i] == 0){
-							row[i] = gameState.getPlayer();
-							painted = true;
-							repaint();
-						}
-					}
-				}
+				paintPiece();
 			}
 			public void mouseEntered(MouseEvent e){
 				setBackground(Color.CYAN);
@@ -67,5 +58,20 @@ public class ColumnView extends JPanel{
 	}
 	public int getCol(){
 		return colNum;
+	}
+	public void paintAITurn(){
+		paintPiece();
+	}
+	public void paintPiece(){
+		if(gameState.addPiece(getCol())){
+			boolean painted = false;
+			for(int i = 0; i < 6 && !painted;i++){
+				if(row[i] == 0){
+					row[i] = gameState.getPlayer();
+					painted = true;
+					repaint();
+				}
+			}
+		}
 	}
 }

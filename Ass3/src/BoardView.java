@@ -29,7 +29,11 @@ public class BoardView extends JFrame{
 			ColumnList.get(i).setPreferredSize(new Dimension(150,700));
 			ColumnList.get(i).setMaximumSize(new Dimension(150,700));
 			ColumnList.get(i).addMouseListener(new MouseAdapter(){
-				
+				public void mouseReleased(MouseEvent e){
+					if(gameState.isAI()){
+						ColumnList.get(gameState.getAITurn()).paintAITurn();
+					}
+				}
 			});
 		}
 		Container Columns = getContentPane();

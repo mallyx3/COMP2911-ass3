@@ -4,6 +4,7 @@ public class Board {
 	private int colSize;
 	private int rowSize;
 	private int player;
+	private int numPlayers = 2;
 	private Player AI;
 	private static int numPieces;
 	private static int DEFAULT_ROW_SIZE = 6;
@@ -69,8 +70,10 @@ public class Board {
 		}
 		for(int i = 0; i < colSize;i++){
 			if(boardState[i][column] == 0){
-				if(player == 1){
+				if (player == 1){
 					player = 2;
+				} else if (player == 2 && numPlayers == 3){
+					player = 3;
 				} else {
 					player = 1;
 				}
@@ -195,11 +198,14 @@ public class Board {
 	public int getAITurn(){
 		return AI.getNextAction();
 	}
-	public void toggleAI(){
-		if(AIGame){
-			AIGame = false;
-		} else{
+	public void turnOnAI(){
+		if(!gameRunning){
 			AIGame = true;
+		}
+	}
+	public void turnOffAI(){
+		if(!gameRunning){
+			AIGame = false;
 		}
 	}
 	public void startGame(){
@@ -216,5 +222,11 @@ public class Board {
 	}
 	public boolean isRunning(){
 		return gameRunning;
+	}
+	public void twoPlayer(){
+		numPlayers = 2;
+	}
+	public void threePlayer(){
+		numPlayers = 3;
 	}
 }

@@ -50,7 +50,9 @@ public class ColumnView extends JPanel{
 				g.setColor(Color.YELLOW);
 			} else if (row[i] == 2){
 				g.setColor(Color.RED);
-			}else {
+			}else if (row[i] == 3){
+				g.setColor(Color.GREEN);
+			} else {
 				g.setColor(Color.WHITE);
 			}
 			g.fillOval(30,560-(110*i),90,90);

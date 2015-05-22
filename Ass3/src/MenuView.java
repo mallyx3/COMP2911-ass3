@@ -1,4 +1,3 @@
-
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -13,6 +12,11 @@ import javax.swing.JRadioButton;
 @SuppressWarnings("serial")
 public class MenuView extends JPanel{
 	private Board gameState;
+	JRadioButton firstButton;
+	JRadioButton secondButton;
+	JRadioButton thirdButton;
+	ButtonGroup group;
+	JButton startButton;
 	public MenuView(Board gameState){
 		super();
 		this.gameState = gameState;
@@ -22,38 +26,48 @@ public class MenuView extends JPanel{
 			
 		Container menu = new Container();
 		menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
-		JRadioButton firstButton = new JRadioButton("One Player");
-	    firstButton.setActionCommand("One Player");
+		firstButton = new JRadioButton("One Player");
+		firstButton.setActionCommand("One Player");
 	    firstButton.setSelected(true);
 
-	    JRadioButton secondButton = new JRadioButton("Two Player");
+	    secondButton = new JRadioButton("Two Player");
 	    secondButton.setActionCommand("Two Player");
-
+	    
+	    thirdButton = new JRadioButton("Three Player");
 	    // Group the radio buttons.
-	    ButtonGroup group = new ButtonGroup();
+	    group = new ButtonGroup();
 	    group.add(firstButton);
 	    group.add(secondButton);
+	    group.add(thirdButton);
 
 	    // Register a listener for the radio buttons.
 	    //RadioListener myListener = new RadioListener();
 	    firstButton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		gameState.toggleAI();
+	    		gameState.turnOnAI();
+	    		gameState.twoPlayer();
 	    	}
 	    });
 	   // firstButton.addChangeListener(myListener);
 	  //  firstButton.addItemListener(myListener);
 	    secondButton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		gameState.toggleAI();
+	    		gameState.turnOffAI();
+	    		gameState.twoPlayer();
+	    	}
+	    });
+	    thirdButton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		gameState.turnOffAI();
+	    		gameState.threePlayer();
 	    	}
 	    });
 	  //  secondButton.addChangeListener(myListener);
 	  //  secondButton.addItemListener(myListener);
 	  
 	    
-	    JButton start = new JButton("Start");
-	    start.addActionListener(new ActionListener() {
+	    startButton = new JButton("Start");
+	    startButton.addActionListener(new ActionListener() {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
@@ -62,36 +76,45 @@ public class MenuView extends JPanel{
             }
         });   
 	    
-        start.setAlignmentX(Component.CENTER_ALIGNMENT);
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-       /* JButton reset = new JButton("Reset");
-	    reset.addActionListener(new ActionListener() {
-	    	 
-            public void actionPerformed(ActionEvent e)
-            {
-                gameState.resetGame();
-                System.out.println("You clicked the reset");
-            }
-        }); */  
-	    
-        //reset.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         
         
         JLabel title = new JLabel("cunnukt fore"); 
         add(title);
         add(firstButton);
     	add(secondButton);
-    	add(start);
-    	//add(reset);
-    	//JLabel footer = new JLabel("we promice it wurks gud");
-    	//JLabel version = new JLabel("beeter 9.7");
-    	//add(footer);
-    	//add(version);
+    	add(thirdButton);
+    	add(startButton);
+    	
     	
         
 		
 		return menu;
 		
-	}	
+	}
+	public void addReset(JButton resetButton){
+		resetButton.setEnabled(false);
+		add(resetButton);
+		resetButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				resetButton.setEnabled(false);
+				firstButton.setEnabled(true);
+				secondButton.setEnabled(true);
+				thirdButton.setEnabled(true);
+				startButton.setEnabled(true);
+			}
+		});
+		startButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				resetButton.setEnabled(true);
+				firstButton.setEnabled(false);
+				secondButton.setEnabled(false);
+				thirdButton.setEnabled(false);
+				startButton.setEnabled(false);
+			}
+		});
+	}
 }
 

@@ -61,7 +61,7 @@ public class BoardView extends JFrame{
 		menu.setMaximumSize(new Dimension(150,700));
 		menu.setBackground(Color.GREEN);
 		menu.newContainer();
-		menu.add(resetButton);
+		menu.addReset(resetButton);
 		Columns.add(menu);
 		
 		
@@ -90,4 +90,5 @@ public class BoardView extends JFrame{
             }
         });
     }
+
 }

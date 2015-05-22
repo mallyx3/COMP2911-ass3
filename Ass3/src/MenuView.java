@@ -35,38 +35,46 @@ public class MenuView extends JPanel{
 	    group.add(secondButton);
 
 	    // Register a listener for the radio buttons.
-	    RadioListener myListener = new RadioListener();
-	    firstButton.addActionListener(myListener);
-	    firstButton.addChangeListener(myListener);
-	    firstButton.addItemListener(myListener);
-	    secondButton.addActionListener(myListener);
-	    secondButton.addChangeListener(myListener);
-	    secondButton.addItemListener(myListener);
-	   
+	    //RadioListener myListener = new RadioListener();
+	    firstButton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		gameState.toggleAI();
+	    	}
+	    });
+	   // firstButton.addChangeListener(myListener);
+	  //  firstButton.addItemListener(myListener);
+	    secondButton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e){
+	    		gameState.toggleAI();
+	    	}
+	    });
+	  //  secondButton.addChangeListener(myListener);
+	  //  secondButton.addItemListener(myListener);
+	  
 	    
 	    JButton start = new JButton("Start");
 	    start.addActionListener(new ActionListener() {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                gameState.setAI();
+                gameState.startGame();
                 System.out.println("You clicked the button");
             }
         });   
 	    
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        JButton reset = new JButton("Reset");
-	    start.addActionListener(new ActionListener() {
+       /* JButton reset = new JButton("Reset");
+	    reset.addActionListener(new ActionListener() {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                
+                gameState.resetGame();
                 System.out.println("You clicked the reset");
             }
-        });   
+        }); */  
 	    
-        start.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //reset.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         
         JLabel title = new JLabel("cunnukt fore"); 
@@ -74,11 +82,11 @@ public class MenuView extends JPanel{
         add(firstButton);
     	add(secondButton);
     	add(start);
-    	add(reset);
-    	JLabel footer = new JLabel("we promice it wurks gud");
-    	JLabel version = new JLabel("beeter 9.7");
-    	add(footer);
-    	add(version);
+    	//add(reset);
+    	//JLabel footer = new JLabel("we promice it wurks gud");
+    	//JLabel version = new JLabel("beeter 9.7");
+    	//add(footer);
+    	//add(version);
     	
         
 		

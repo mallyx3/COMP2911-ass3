@@ -1,5 +1,4 @@
 
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
@@ -33,7 +32,9 @@ public class ColumnView extends JPanel{
 				paintPiece();
 			}
 			public void mouseEntered(MouseEvent e){
-				setBackground(Color.CYAN);
+				if(gameState.isRunning()){
+					setBackground(Color.CYAN);
+				}
 			}
 			public void mouseExited(MouseEvent e){
 				setBackground(Color.BLUE);
@@ -73,5 +74,11 @@ public class ColumnView extends JPanel{
 				}
 			}
 		}
+	}
+	public void resetBoard(){
+		for(int i = 0;i < 6; i++){
+			row[i] = 0;
+		}
+		repaint();
 	}
 }

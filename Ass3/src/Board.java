@@ -1,3 +1,4 @@
+
 public class Board {
 	private Integer[][] boardState;
 	private int colSize;
@@ -7,7 +8,8 @@ public class Board {
 	private static int numPieces;
 	private static int DEFAULT_ROW_SIZE = 6;
 	private static int DEFAULT_COL_SIZE = 7;
-	private boolean AIGame;
+	private boolean AIGame = true;
+	private boolean gameRunning = false;
 
 	public Board(){
 		this.boardState = new Integer[DEFAULT_ROW_SIZE][DEFAULT_COL_SIZE];
@@ -17,7 +19,6 @@ public class Board {
 		numPieces = 0;
 		int i;
 		int j;
-		this.AIGame = false;
 		this.AI = new Player(0);
 		
 
@@ -60,6 +61,9 @@ public class Board {
 
 	//need to check if numPieces is < total num of pieces (42 for default 7x6 board)
 	public boolean addPiece(int column){
+		if(!gameRunning){
+			return false;
+		}
 		if(column < 0 || column >= colSize){ // shouldn't be necessary in final product but just in case
 			return false;
 		}
@@ -191,7 +195,26 @@ public class Board {
 	public int getAITurn(){
 		return AI.getNextAction();
 	}
-	public void setAI(){
-		AIGame = true;
+	public void toggleAI(){
+		if(AIGame){
+			AIGame = false;
+		} else{
+			AIGame = true;
+		}
+	}
+	public void startGame(){
+		gameRunning = true;
+	}
+	public void resetGame(){
+		gameRunning = false;
+		for (int i = 0; i < rowSize; i++){
+			for(int j = 0; j < colSize; j++){
+				boardState[i][j] = 0;
+			}
+		}
+		player = 0;
+	}
+	public boolean isRunning(){
+		return gameRunning;
 	}
 }

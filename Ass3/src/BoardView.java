@@ -4,17 +4,20 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 @SuppressWarnings("serial")
 
 public class BoardView extends JFrame{
-	@SuppressWarnings("unused")
+
 	private Board gameState;
 	public BoardView(){
 		initBView();
@@ -41,12 +44,24 @@ public class BoardView extends JFrame{
 		for(int i = 0;i < 7; i++){
 			Columns.add(ColumnList.get(i));
 		}
+		JButton resetButton = new JButton("Reset");
+		resetButton.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				for(int i = 0; i < 7; i++){
+					ColumnList.get(i).resetBoard();
+					gameState.resetGame();
+				}
+			}
+			
+		});
 		
 		MenuView menu = new MenuView(gameState);
 		menu.setPreferredSize(new Dimension(150,700));
 		menu.setMaximumSize(new Dimension(150,700));
 		menu.setBackground(Color.GREEN);
 		menu.newContainer();
+		menu.add(resetButton);
 		Columns.add(menu);
 		
 		
@@ -75,6 +90,4 @@ public class BoardView extends JFrame{
             }
         });
     }
-	
-
 }

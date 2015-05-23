@@ -1,4 +1,5 @@
 
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -135,6 +136,7 @@ public class MenuView extends JPanel{
             public void actionPerformed(ActionEvent e)
             {
                 gameState.toggleGameState(true);
+                gameState.printDiff();
                 System.out.println("You clicked the button");
             }
         });   

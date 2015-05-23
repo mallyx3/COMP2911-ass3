@@ -38,7 +38,7 @@ public class BoardView extends JFrame{
 							ColumnList.get(i).paintWinPieces();
 						}
 					}
-					if(gameState.isAI()){
+					if(gameState.isAI() && gameState.isRunning() && gameState.getPlayer() == 1){
 						ColumnList.get(gameState.getAITurn()).paintAITurn();
 						if(gameState.hasWon() || gameState.checkDraw()){
 							gameState.toggleGameState(false);

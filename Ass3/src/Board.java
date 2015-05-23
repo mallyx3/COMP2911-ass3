@@ -66,7 +66,7 @@ public class Board {
 
 	//need to check if numPieces is < total num of pieces (42 for default 7x6 board)
 	public boolean addPiece(int column){
-		if(!gameRunning){
+		if(!isRunning()){
 			return false;
 		}
 		if(column < 0 || column >= colSize){ // shouldn't be necessary in final product but just in case
@@ -87,7 +87,7 @@ public class Board {
 				return true;
 			}
 		}
-		this.print();
+		//this.print();
 		return false;
 	}
 
@@ -155,6 +155,7 @@ public class Board {
 					}
 				}
 				tempj++;
+				i = tempi;
 			}
 			tempi++;				
 		}
@@ -181,6 +182,7 @@ public class Board {
 					}
 				}
 				tempj++;
+				i = tempi;
 			}
 			tempi++;				
 		}		
@@ -251,5 +253,8 @@ public class Board {
 	}
 	public ArrayList<Coordinates> getWinningPieces(){
 		return winningPieces;
+	}
+	public void printDiff(){
+		System.out.printf("%d\n", AI.getDifficulty());
 	}
 }

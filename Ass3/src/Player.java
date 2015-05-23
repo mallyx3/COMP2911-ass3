@@ -63,6 +63,11 @@ public class Player {
 	public int getNextAction(int board[][]){
 		//Prompt player for move
 		if (difficulty == DIFFICULTY_EASY) {
+			if(board[0][3] == 0){
+				return 3;
+			} else if(board[0][2] == 0){
+				return 2;
+			}
 			Random rand = new Random();
 			int i = rand.nextInt(7);
 			while(board[5][i] != 0){
@@ -72,6 +77,11 @@ public class Player {
 		//Return medium AI move
 		} else if (difficulty == DIFFICULTY_MEDIUM) {
 			//todo need to add code for more complex decisions
+			if(board[0][3] == 0){
+				return 3;
+			} else if(board[0][2] == 0){
+				return 2;
+			}
 			int i = findPiece(board, 2);
 			if (i != -1){
 				return i;
@@ -88,6 +98,11 @@ public class Player {
 			return i;
 		//Return hard AI move
 		} else {
+			if(board[0][3] == 0){
+				return 3;
+			} else if(board[0][2] == 0){
+				return 2;
+			}
 			int i = findPiece(board, 2);
 			if (i != -1){
 				return i;

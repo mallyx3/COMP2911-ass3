@@ -1,5 +1,11 @@
+//package ass3;
 
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 
 
 public class Board {
@@ -14,6 +20,8 @@ public class Board {
 	private static int DEFAULT_COL_SIZE = 7;
 	private boolean AIGame = true;
 	private boolean gameRunning = false;
+	private boolean pieceFalling = false;
+	private boolean isAITurn = false;
 	private ArrayList<Coordinates> winningPieces = new ArrayList<Coordinates>();
 
 	public Board(){
@@ -218,7 +226,10 @@ public class Board {
 		return AIGame;
 	}
 	public int getAITurn(){
+		isAITurn = false;
 		return AI.getNextAction(boardState);
+		
+		
 	}
 	public void toggleAI(boolean AItoggle){
 		if(!gameRunning){
@@ -226,19 +237,20 @@ public class Board {
 		}
 	}
 	public void toggleGameState(boolean running){
-		if(running){
-			winningPieces.clear();
-		}
+		
+		player = numPlayers;
 		gameRunning = running;
+		
 	}
 	
 	public void resetGame(){
-		gameRunning = false;
+		gameRunning = true;
 		for (int i = 0; i < rowSize; i++){
 			for(int j = 0; j < colSize; j++){
 				boardState[i][j] = 0;
 			}
 		}
+		winningPieces.clear();
 		numPieces = 0;
 		player = 0;
 	}
@@ -256,5 +268,30 @@ public class Board {
 	}
 	public void printDiff(){
 		System.out.printf("%d\n", AI.getDifficulty());
+	}
+	public boolean isWinPiece(int column, int row){
+		if(winningPieces.size() == 0){
+			return false;
+		} 
+		for(int i = 0; i < 4; i++){
+			if(winningPieces.get(i).getCol() == column && winningPieces.get(i).getRow() == row){
+				return true;
+			}
+		}
+		return false;
+	}
+	public void pieceFalling(){
+		if(pieceFalling){
+			pieceFalling = false;
+		} else{
+			pieceFalling = true;
+		}
+	}
+	public void makeAITurn(){
+		isAITurn = true;
+			
+	}
+	public boolean ifAITurn(){
+		return isAITurn;
 	}
 }

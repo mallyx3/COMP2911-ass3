@@ -2,6 +2,7 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -34,12 +35,12 @@ public class ColumnView extends JPanel{
 		timeThing = new Timer(5,new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				yFall = yFall + 4;
-				if(yFall > 570 - 110*l){
-					System.out.printf("%d\n", l);
+				if(yFall > 670 - 110*l){
+
 					pieceFalling = false;
 					gameState.pieceFalling();
 				}
-				System.out.print("Hi\n");
+
 				timeThing.stop();
 				repaint();
 			}
@@ -101,24 +102,24 @@ public class ColumnView extends JPanel{
 		for(int i = 0; i < 6; i++){
 			isWinPiece = false;
 			if(gameState.isWinPiece(colNum, i)){
-				System.out.print("Winner\n");
 				isWinPiece = true;
 			}
-			if(i == l && pieceFalling){
+			/*if(i == l && pieceFalling){
 				
 				g.setColor(Color.WHITE);
-				g.fillOval(30, 570-110*i, 90, 90);
+				g.fillOval(30, 670-110*i, 90, 90);
 					
 				g.setColor(Color.BLACK);
-				g.drawOval(30, 570-110*i, 90, 90);
+				g.drawOval(30, 670-110*i, 90, 90);
 				
-			}
+			}*/
+			ImageIcon newPiece = null;
 			if(row[i] == 1){
 				if(!colourBlindMode){
 					if(!isWinPiece && gameFinished){
-						g.setColor(new Color(175,175,0));
+						newPiece = new ImageIcon(getClass().getResource("Art/CoinY.png"));
 					} else {
-						g.setColor(Color.YELLOW);
+						newPiece = new ImageIcon(getClass().getResource("Art/CoinY.png"));
 					}
 				} else {
 					if(!isWinPiece && gameFinished){
@@ -130,9 +131,9 @@ public class ColumnView extends JPanel{
 				}
 			} else if (row[i] == 2){
 				if(!isWinPiece && gameFinished){
-					g.setColor(new Color(175,0,0));
+					newPiece = new ImageIcon(getClass().getResource("Art/CoinR.png"));
 				} else {
-					g.setColor(Color.RED);
+					newPiece = new ImageIcon(getClass().getResource("Art/CoinR.png"));
 				}
 			}  else if ((i == 0 || row[i-1] != 0) && !gameFinished && mouseEntered){
 				if(gameState.isAI() || gameState.getPlayer() == 2){
@@ -145,27 +146,23 @@ public class ColumnView extends JPanel{
 					g.setColor(new Color(255,100,100));
 				}
 			} else {
-				g.setColor(Color.WHITE);
+				
 			}
 			if(i == l && pieceFalling){
 				
+				newPiece.paintIcon(this, g, 30, yFall);
 				
-				g.fillOval(30,yFall,90,90);
-				
-				g.setColor(Color.BLACK);
-				g.drawOval(30,yFall,90,90);
 			} else {
-				g.fillOval(30,570-(110*i),90,90);
-			
-				g.setColor(Color.BLACK);
-				g.drawOval(30,570-(110*i),90,90);
+				if(row[i] != 0){
+					newPiece.paintIcon(this, g, 30, 670-110*i);
+				}
 			}
 			
 			
 			
 		}
-		ImageIcon column = new ImageIcon("/Art/board.png");
-		column.paintIcon(this, g, 0, 0);
+		ImageIcon column = new ImageIcon(getClass().getResource("Art/board.png"));
+		column.paintIcon(this,g,0,100);
 		if(pieceFalling){
 			timeThing.start();
 		}

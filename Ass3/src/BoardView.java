@@ -65,7 +65,7 @@ public class BoardView extends JFrame{
 		
 		for(int i = 0; i < 7;i++){
 			ColumnList.add(new ColumnView(i, gameState, colourBlindMode));
-			//ColumnList.get(i).setBackground(new Color(0,0,200));
+			ColumnList.get(i).setBackground(new Color(180,230,255));
 			ColumnList.get(i).setPreferredSize(new Dimension(150,800));
 			ColumnList.get(i).setMaximumSize(new Dimension(150,800));
 			ColumnList.get(i).addMouseListener(new MouseAdapter(){
@@ -337,4 +337,3 @@ public class BoardView extends JFrame{
 	}
 	
 }
-

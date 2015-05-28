@@ -56,7 +56,7 @@ public class ColumnView extends JPanel{
 			public void mouseClicked(MouseEvent e){	
 			}
 			public void mousePressed(MouseEvent e){
-				if(!gameState.ifAITurn()){
+				if(!gameState.isAITurn()){
 					mouseClicked = true;
 					paintPiece();
 				}

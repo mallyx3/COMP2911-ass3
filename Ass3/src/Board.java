@@ -87,7 +87,7 @@ public class Board {
      */
     public int getAITurn() {
         isAITurn = false;
-        return AI.getNextAction(boardState);
+        return AI.makeMove(boardState);
     }
 
     /**
@@ -188,10 +188,10 @@ public class Board {
     }
 
     /**
-     * Adds a game token to a column. Will return false if addition is unsuccessful,
+     * Adds a game piece to a column. Will return false if addition is unsuccessful,
      * otherwise true
      *
-     * @param column the column number to place token
+     * @param column the column number to place game piece
      * @return <code>true</code> if the insertion is successful, or <code>false</code>
      * if the column is already full.
      */

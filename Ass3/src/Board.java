@@ -351,9 +351,9 @@ public class Board {
         int i;
         int j;
         System.out.println("Current Board:");
-        for(i = 0 ; i < rowSize ; i++ ){
+        for (i = DEFAULT_ROW_SIZE - 1; i >= 0; i--) {
             System.out.print("|");
-            for(j = 0; j < colSize ; j++){
+            for (j = 0; j < colSize; j++) {
                 System.out.print(boardState[i][j] + "|");
             }
             System.out.println("");

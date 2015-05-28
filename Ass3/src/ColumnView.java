@@ -102,7 +102,7 @@ public class ColumnView extends JPanel {
     public int[] getRow() {
         return row;
     }
-    //todo - write javadoc. Not sure what this field does
+    //todo - write javadoc. Not sure what field yFall represents
 
     /**
      * @return
@@ -125,7 +125,7 @@ public class ColumnView extends JPanel {
     public boolean isMouseClicked() {
         return mouseClicked;
     }
-    //todo - write javadoc. Not sure what this field does
+    //todo - write javadoc. Not sure what field mouseEntered represents
 
     /**
      * @return
@@ -149,7 +149,7 @@ public class ColumnView extends JPanel {
     public boolean isPieceFalling() {
         return pieceFalling;
     }
-    //todo - write javadoc. Not sure what this field does
+    //todo - write javadoc. Not sure what field timeThing represents
 
     /**
      * @return
@@ -157,7 +157,7 @@ public class ColumnView extends JPanel {
     public Timer getTimeThing() {
         return timeThing;
     }
-    //todo - write javadoc. Not sure what this field does
+    //todo - write javadoc. Not sure what field g represents
 
     /**
      * @return

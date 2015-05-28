@@ -79,7 +79,7 @@ public class Player {
                 i = rand.nextInt(COL_SIZE);
             }
             return i;
-        //Make medium difficulty AI move
+            //Make medium difficulty AI move
         } else if (difficulty == DIFFICULTY_MEDIUM) {
             if (board[0][3] == EMPTY_SPACE) {
                 return 3;
@@ -132,7 +132,7 @@ public class Player {
             }
             return i;
 
-        //Make hard difficulty AI move
+            //Make hard difficulty AI move
         } else {
             if (board[0][3] == EMPTY_SPACE) {
                 return 3;
@@ -209,9 +209,8 @@ public class Player {
     }
 
     //todo - write javadoc. Not sure what this method does
+
     /**
-     *
-     *
      * @param testBoard
      * @param column
      * @param player

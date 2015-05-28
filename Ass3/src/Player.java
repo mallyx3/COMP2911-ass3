@@ -1,403 +1,353 @@
+//package ass3;
+
 import java.util.Random;
 
 public class Player {
-    private int difficulty;
-    boolean isAI = false;
-    private static int playerNum = 0;
-    private int player;
-    private String colour;
-    private String name;
-    private final String DEFAULT_PLAYER_ONE_COLOUR = "Red";
-    private final String DEFAULT_PLAYER_TWO_COLOUR = "Yellow";
-    private final int DIFFICULTY_EASY = 0;
-    private final int DIFFICULTY_MEDIUM = 1;
-    private final int ROW_SIZE = 6;
-    private final int COL_SIZE = 7;
+	private int difficulty;
 
-    /**
-     * Construct an AI player. Defaults difficulty level to easy.
-     */
-    public Player() {
-        playerNum++;
-        this.name = "AI";
-        this.player = playerNum;
-        this.isAI = true;
-        this.difficulty = DIFFICULTY_EASY;
+	private int player = 2;
+	
 
-        if (player == 1) {
-            colour = DEFAULT_PLAYER_ONE_COLOUR;
-        } else {
-            colour = DEFAULT_PLAYER_TWO_COLOUR;
-        }
-    }
+	private final int DIFFICULTY_EASY = 0;
+	private final int DIFFICULTY_MEDIUM = 1;
+	private final int DIFFICULTY_HARD = 2;
 
-    /**
-     * Construct an AI player, optionally sets difficulty level.
-     * Defaults difficulty setting to easy.
-     */
-    public Player(int difficulty) {
-        playerNum++;
-        this.name = "AI";
-        this.player = playerNum;
-        this.isAI = true;
-        this.difficulty = difficulty;
+	//Create AI player with default easy difficulty
 
-        if (player == 1) {
-            colour = DEFAULT_PLAYER_ONE_COLOUR;
-        } else {
-            colour = DEFAULT_PLAYER_TWO_COLOUR;
-        }
-    }
+	//Create AI player with give difficulty setting
+	public Player(int difficulty){
+		
+		this.difficulty = difficulty;
 
-    /**
-     * Construct a player with given name.
-     */
-    public Player(String name) {
-        playerNum++;
-        this.name = name;
-        this.player = playerNum;
+		
+	}
 
-        if (player == 1) {
-            colour = DEFAULT_PLAYER_ONE_COLOUR;
-        } else {
-            colour = DEFAULT_PLAYER_TWO_COLOUR;
-        }
-    }
+	
 
-    /**
-     * Gets the AI's move
-     *
-     * @param board the state of the board
-     * @return the AI's column number choice.
-     */
-    public int makeMove(int board[][]) {
-        //Prompt player for move
-        if (difficulty == DIFFICULTY_EASY) {
-            if (board[0][3] == 0) {
-                return 3;
-            } else if (board[0][2] == 0) {
-                return 2;
-            }
-            Random rand = new Random();
-            int i = rand.nextInt(COL_SIZE);
-            while (board[ROW_SIZE - 1][i] != 0) {
-                i = rand.nextInt(COL_SIZE);
-            }
-            return i;
-            //Return medium AI move
-        } else if (difficulty == DIFFICULTY_MEDIUM) {
-            //todo need to add code for more complex decisions
-            if (board[0][3] == 0) {
-                return 3;
-            } else if (board[0][2] == 0) {
-                return 2;
-            }
-            int i = findPiece(board, 2);
-            if (i != -1) {
-                return i;
-            }
-            i = findPiece(board, 1);
-            if (i != -1) {
-                return i;
-            }
-            Random rand = new Random();
-            i = rand.nextInt(COL_SIZE);
-            while (board[ROW_SIZE - 1][i] != 0) {
-                i = rand.nextInt(COL_SIZE);
-            }
-            return i;
-            //Return hard AI move
-        } else {
-            if (board[0][3] == 0) {
-                return 3;
-            } else if (board[0][2] == 0) {
-                return 2;
-            }
-            int i = findPiece(board, 2);
-            if (i != -1) {
-                return i;
-            }
-            i = findPiece(board, 1);
-            if (i != -1) {
-                return i;
-            }
-            int[] checkPieces = new int[COL_SIZE];
-            for (int j = 0; j < COL_SIZE; j++) {
-                checkPieces[j] = 0;
-                if (badPiece(board, j)) {
-                    checkPieces[j] = 2;
-                }
-            }
-            for (int j = 0; j < COL_SIZE; j++) {
-                if (badPiece(board, j) && checkPieces[j] != 2) {
-                    checkPieces[j] = 1;
-                }
-            }
-            boolean checkForLegal = false;
-            int k = 0;
-            for (int j = 0; j < COL_SIZE; j++) {
-                if (checkPieces[j] == 0 && board[ROW_SIZE - 1][j] == 0) {
-                    checkForLegal = true;
-                }
-            }
-            if (!checkForLegal) {
-                k++;
-                for (int j = 0; j < COL_SIZE; j++) {
-                    if (checkPieces[j] <= 1 && board[ROW_SIZE - 1][j] == 0) {
-                        checkForLegal = true;
-                    }
-                }
-            }
-            if (!checkForLegal) {
-                k++;
-            }
-            System.out.printf("%d\n", k);
-            Random rand = new Random();
-            i = rand.nextInt(COL_SIZE);
-            while (checkPieces[i] > k || (checkPieces[i] <= k && board[ROW_SIZE - 1][i] != 0)) {
-                i = rand.nextInt(COL_SIZE);
-            }
-            return i;
-        }
-    }
+	public int getNextAction(int board[][]){
+		if (difficulty == DIFFICULTY_EASY) {
+			if(board[0][3] == 0){
+				return 3;
+			} 
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 2, 0)){
+				return j;
+				}
+			}
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 0)){
+				return j;
+				}
+			}
+			Random rand = new Random();
+			int i = rand.nextInt(7);
+			while(board[5][i] != 0){
+				i = rand.nextInt(7);
+			}
+			return i;
+		} else if (difficulty == DIFFICULTY_MEDIUM) {
+			if(board[0][3] == 0){
+				return 3;
+			} 
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 2, 0)){
+				return j;
+				}
+			}
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 0)){
+				return j;
+				}
+			}
+			int[] checkPieces = new int[7];
+			for(int j = 0; j < 7; j++){
+				checkPieces[j] = 0;
+				if(testPiece(board,j,1,0)){
+					checkPieces[j] = 2;
+				}
+			}
+			for(int j = 0; j < 7; j++){
+				if(testPiece(board,j,2,0) && checkPieces[j] != 2){
+					checkPieces[j] = 1;
+				}
+			}
+			boolean checkForLegal = false;
+			int k = 0;
+			for(int j = 0; j < 7; j++){
+				if(checkPieces[j] == 0 && board[5][j] == 0){
+					checkForLegal = true;
+				}
+			}
+			if(!checkForLegal){
+				k++;
+				for(int j = 0; j < 7; j++){
+					if(checkPieces[j] <= 1 && board[5][j] == 0){
+						checkForLegal = true;
+					}
+				}
+			}
+			if(!checkForLegal){
+				k++;
+			}
+			System.out.printf("%d\n", k);
+			Random rand = new Random();
+			int i = rand.nextInt(7);
+			while(checkPieces[i] > k || (checkPieces[i] <= k && board[5][i] != 0)){
+				i = rand.nextInt(7);
+			}
+			return i;
+		
+		//Return hard AI move
+		} else {
+			if(board[0][3] == 0){
+				return 3;
+			} 
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 2, 0)){
+				return j;
+				}
+			}
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 0)){
+				return j;
+				}
+			}
+			int[] checkPieces = new int[7];
+			for(int j = 0; j < 7; j++){
+				checkPieces[j] = 0;
+				if(testPiece(board,j,1,0)){
+					checkPieces[j] = 2;
+				}
+			}
+			for(int j = 0; j < 7; j++){
+				if(testPiece(board,j,2,0) && checkPieces[j] != 2){
+					checkPieces[j] = 1;
+				}
+			}
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 1) && checkPieces[j] == 0){
+				return j;
+				}
+			}
+			
+			for(int j = 0; j < 7;j++){
+				if(testPiece(board,j,2,1) && checkPieces[j] == 0){
+					return j;
+				}
+			}
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 2, 1) && checkPieces[j] < 2){
+				return j;
+				}
+			}
+			for(int j = 0; j < 7; j++){
+				if(testPiece(board,j,2,1) && checkPieces[j] < 2){
+					return j;
+				}
+			}
+			boolean checkForLegal = false;
+			int k = 0;
+			for(int j = 0; j < 7; j++){
+				if(checkPieces[j] == 0 && board[5][j] == 0){
+					checkForLegal = true;
+				}
+			}
+			if(!checkForLegal){
+				k++;
+				for(int j = 0; j < 7; j++){
+					if(checkPieces[j] <= 1 && board[5][j] == 0){
+						checkForLegal = true;
+					}
+				}
+			}
+			if(!checkForLegal){
+				k++;
+			}
+			System.out.printf("%d\n", k);
+			Random rand = new Random();
+			int i = rand.nextInt(7);
+			while(checkPieces[i] > k || (checkPieces[i] <= k && board[5][i] != 0)){
+				i = rand.nextInt(7);
+			}
+			return i;
+		}
+	}
 
-    /**
-     * @return the number of players in the game
-     */
-    public int getPlayerNum() {
-        return playerNum;
-    }
 
-    /**
-     * @return the ID number of the player
-     */
-    public int getPlayer() {
-        return player;
-    }
+	public int getPlayer(){
+		return player;
+	}
 
-    /**
-     * @return the colour of the player's game pieces
-     */
-    public String getColour() {
-        return colour;
-    }
+	
+	public int getDifficulty() {
+		return difficulty;
+	}
 
-    /**
-     * @return the name of the player
-     */
-    public String getName() {
-        return name;
-    }
 
-    /**
-     * @return the difficulty of the game
-     */
-    public int getDifficulty() {
-        return difficulty;
-    }
+	public void setPlayer(int player) { this.player = player; }
 
-    /**
-     * Sets the number of players in the game
-     * @param playerNum the number of players
-     */
-    public void setPlayerNum(int playerNum) {
-        this.playerNum = playerNum;
-    }
+	
+	
+	public void setDifficulty(int newDifficulty) {this.difficulty = newDifficulty; }
+	
+	public boolean findPiece(int testBoard[][],int column, int player, int blankPieces){
+		int i;
+		int j;
+		boolean foundCheck = false;
+		
+			if(testBoard[5][column] == 0){
+				for(j = 0; j < 6 && !foundCheck;j++){
+					if(testBoard[j][column] == 0){
+						
+						foundCheck = true;
+						testBoard[j][column] = player;
+						if(testForWin(testBoard,player,blankPieces)){
+							testBoard[j][column] = 0;
+							return true;
+						} else {
+							testBoard[j][column] = 0;
+						}
+					}
+				}
+				foundCheck = false;
+			}
+		
+		
+		return false;
+	}
+	
+	public boolean testPiece(int board[][], int column, int player, int blankPieces){
+		int i;
+		boolean foundCheck = false;
+		for(i = 0; i < 5 && !foundCheck;i++){
+			if(board[i][column] == 0){
+				foundCheck = true;
+				board[i+1][column] = player;
+				if(testForWin(board, player, blankPieces)){
+					board[i+1][column] = 0;
+					return true;
+				} else {
+					board[i+1][column] = 0;
+				}
+			}
+		}
+		return false;
+	}
+	public boolean testForWin(int board[][], int player, int blankPieces){
+		int i;
+		int j;
+		int winCount;
+		int blanks = 0;
+		int tempi = 0;
+		int tempj = 0;
+		//Horizontal check
+		for(tempi = 0;tempi < 6;tempi++){
+			i = tempi;
+			for(tempj = 0; tempj < 4; tempj++){
+				j = tempj;
+				for(i = 0 ; i < 6 ; i++ ){
+					winCount = 0;
+					for(j = 0; j < 7; j++){
+						if(board[i][j] == player){
+							winCount++;
+		
+						} else if(board[i][j] == 0 && blankPieces != 0 && blanks < blankPieces){
+							winCount++;
+							blanks++;
+						} else {
+							winCount = 0;
+							blanks = 0;
+						}
+						if(winCount == 4){
+							return true;
+						}
+					}
+				}
+			}
+		}
+		//Vertical check
+		for(i = 0 ; i < 7 ; i++ ){
+			winCount = 0;
+			for(j = 0; j < 6 ; j++){
+				if(board[j][i] == player){
+					winCount++;
+				} else {
+					winCount = 0;
+					blanks = 0;
+				}
+				if(winCount == 4){
+					return true;
+				}
+			}
+		}
+		
+		
+		i = 0; 
+		j = 0; 
+		while (tempi<3) {
+			i = tempi;
+			tempj = 0;
+			while (tempj<4) {
+				j = tempj;
+				winCount = 0;
 
-    /**
-     * Sets the ID number of the player
-     *
-     * @param player the player's ID number
-     */
-    public void setPlayer(int player) {
-        this.player = player;
-    }
+				while (winCount<4 && i < 6 && j < 7) {
+					if(board[i][j] == player){
+						winCount++;
+						i++;
+						j++;	
+					} else if(board[i][j] == 0 && blankPieces != 0 && 
+							  blanks < blankPieces){
+						winCount++;
+						blanks++;
+						i++;
+						j++;
+					} else {
+						blanks = 0;
+						break;
+					}
+					if(winCount == 4){
+						return true;
+					}
+				}
+				tempj++;
+				i = tempi;
+			}
+			tempi++;				
+		}
+		
+		tempi = 3; i = 3; tempj = 0; j = 0;
+		while (tempi<6) {
+			i = tempi;
+			tempj = 0;
+			while (tempj<4) {
+				j = tempj;
+				winCount = 0;
+				while (winCount<4 && i >= 0 && j <= 7) {
+					if(board[i][j] == player){
+						winCount++;
+						i--;
+						j++;	
+					} else if(board[i][j] == 0 && blankPieces != 0 && 
+							  blanks < blankPieces){
+						winCount++;
+						blanks++;
+						i--;
+						j++;	
+					} else {
+						blanks = 0;
+						break;
+					}
+					if(winCount == 4){
+						return true;
+					}
+				}
+				tempj++;
+				i = tempi;
+			}
+			tempi++;				
+		}		
+		return false;
+	}
 
-    /**
-     * Sets the colour of the player's game pieces
-     *
-     * @param colour the colour of the player's sgame pieces
-     */
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    /**
-     * Sets the name of the player
-     *
-     * @param name the name of the player
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Sets the difficulty level of the AI
-     *
-     * @param difficulty the difficulty level of the AI
-     */
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-    }
-    //todo - write javadoc. Not sure what this method does
-    /**
-     *
-     *
-     * @param testBoard
-     * @param player
-     * @return
-     */
-    public int findPiece(int testBoard[][], int player) {
-        int i;
-        int j;
-        boolean foundCheck = false;
-
-        for (i = 0; i < COL_SIZE; i++) {
-            if (testBoard[ROW_SIZE-1][i] == 0) {
-                for (j = 0; j < ROW_SIZE && !foundCheck; j++) {
-                    if (testBoard[j][i] == 0) {
-                        foundCheck = true;
-                        testBoard[j][i] = player;
-                        if (testForWin(testBoard, player)) {
-                            testBoard[j][i] = 0;
-                            return i;
-                        } else {
-                            testBoard[j][i] = 0;
-                        }
-                    }
-                }
-                foundCheck = false;
-            }
-        }
-
-        return -1;
-    }
-
-    //todo - write javadoc. Not sure what this method does
-    /**
-     *
-     *
-     * @param board
-     * @param column
-     * @return
-     */
-    public boolean badPiece(int board[][], int column) {
-        int i;
-        boolean foundCheck = false;
-
-        for (i = 0; i < ROW_SIZE - 1 && !foundCheck; i++) {
-            if (board[i][column] == 0) {
-                foundCheck = true;
-                board[i + 1][column] = 1;
-                if (testForWin(board, 1)) {
-                    board[i + 1][column] = 0;
-                    return true;
-                } else {
-                    board[i + 1][column] = 0;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if the given player has won
-     *
-     * @param board the state of the board
-     * @param player the player ID number
-     * @return <code>true</code> if the player has won, or otherwise
-     * <code>false</code>
-     */
-    public boolean testForWin(int board[][], int player) {
-        int i;
-        int j;
-        int winCount;
-        //Horizontal check
-        for (i = 0; i < ROW_SIZE; i++) {
-            winCount = 0;
-            for (j = 0; j < COL_SIZE; j++) {
-                if (board[i][j] == player) {
-                    winCount++;
-
-                } else {
-                    winCount = 0;
-                }
-                if (winCount == 4) {
-                    return true;
-                }
-            }
-        }
-        //Vertical check
-        for (i = 0; i < COL_SIZE; i++) {
-            winCount = 0;
-            for (j = 0; j < ROW_SIZE; j++) {
-                if (board[j][i] == player) {
-                    winCount++;
-                } else {
-                    winCount = 0;
-                }
-                if (winCount == 4) {
-                    return true;
-                }
-            }
-        }
-
-        int tempI = 0;
-        int tempJ = 0;
-        i = 0;
-        j = 0;
-        while (tempI < 3) {
-            i = tempI;
-            tempJ = 0;
-            while (tempJ < 4) {
-                j = tempJ;
-                winCount = 0;
-
-                while (winCount < 4 && i < ROW_SIZE && j < COL_SIZE) {
-                    if (board[i][j] == player) {
-                        winCount++;
-                        i++;
-                        j++;
-                    } else {
-                        break;
-                    }
-                    if (winCount == 4) {
-                        return true;
-                    }
-                }
-                tempJ++;
-                i = tempI;
-            }
-            tempI++;
-        }
-
-        tempI = 3;
-        i = 3;
-        tempJ = 0;
-        j = 0;
-        while (tempI < ROW_SIZE) {
-            i = tempI;
-            tempJ = 0;
-            while (tempJ < 4) {
-                j = tempJ;
-                winCount = 0;
-                while (winCount < 4 && i >= 0) {
-                    if (board[i][j] == player) {
-                        winCount++;
-                        i--;
-                        j++;
-                    } else {
-                        break;
-                    }
-                    if (winCount == 4) {
-                        return true;
-                    }
-                }
-                tempJ++;
-                i = tempI;
-            }
-            tempI++;
-        }
-        return false;
-    }
 }

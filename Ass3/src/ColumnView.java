@@ -34,7 +34,7 @@ public class ColumnView extends JPanel{
 		
 		timeThing = new Timer(5,new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				yFall = yFall + 4;
+				yFall = yFall + 6;
 				if(yFall > 670 - 110*l){
 
 					pieceFalling = false;
@@ -56,7 +56,7 @@ public class ColumnView extends JPanel{
 			public void mouseClicked(MouseEvent e){	
 			}
 			public void mousePressed(MouseEvent e){
-				if(!gameState.isAITurn()){
+				if(!gameState.ifAITurn() && gameState.isRunning()){
 					mouseClicked = true;
 					paintPiece();
 				}
@@ -69,13 +69,13 @@ public class ColumnView extends JPanel{
 			}
 			public void mouseEntered(MouseEvent e){
 				mouseEntered = true;
-				if(!pieceFalling){
+				if(!pieceFalling && gameState.isRunning()){
 					repaint();
 				}
 			}
 			public void mouseExited(MouseEvent e){
 				mouseEntered = false;
-				if(!pieceFalling){
+				if(!pieceFalling && gameState.isRunning()){
 					repaint();
 				}
 			}
@@ -88,63 +88,70 @@ public class ColumnView extends JPanel{
 		
 		boolean isWinPiece;
 		boolean gameFinished = false;
-		/*if(mouseClicked && gameState.isRunning()){
-			setBackground(new Color(0,0,150));
-		} else if(mouseEntered && gameState.isRunning()){
-			setBackground(Color.BLUE);
-		} else {
-			setBackground(new Color(0,0,200));
-		}*/
+		
 		if(!gameState.isRunning()){
 			gameFinished = true;
-			//setBackground(new Color(0,0,200));
+			
 		}
 		for(int i = 0; i < 6; i++){
 			isWinPiece = false;
 			if(gameState.isWinPiece(colNum, i)){
 				isWinPiece = true;
 			}
-			/*if(i == l && pieceFalling){
-				
-				g.setColor(Color.WHITE);
-				g.fillOval(30, 670-110*i, 90, 90);
-					
-				g.setColor(Color.BLACK);
-				g.drawOval(30, 670-110*i, 90, 90);
-				
-			}*/
+			
 			ImageIcon newPiece = null;
 			if(row[i] == 1){
 				if(!colourBlindMode){
 					if(!isWinPiece && gameFinished){
-						newPiece = new ImageIcon(getClass().getResource("Art/CoinY.png"));
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinYDark.png"));
 					} else {
-						newPiece = new ImageIcon(getClass().getResource("Art/CoinY.png"));
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinY.png"));
 					}
 				} else {
 					if(!isWinPiece && gameFinished){
-						g.setColor(new Color(0,175,0));
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinYDarkColourBlind.png"));
 					} else {
-						g.setColor(Color.GREEN);
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinYColourBLind.png"));
 					}
 					
 				}
 			} else if (row[i] == 2){
-				if(!isWinPiece && gameFinished){
-					newPiece = new ImageIcon(getClass().getResource("Art/CoinR.png"));
-				} else {
-					newPiece = new ImageIcon(getClass().getResource("Art/CoinR.png"));
-				}
-			}  else if ((i == 0 || row[i-1] != 0) && !gameFinished && mouseEntered){
-				if(gameState.isAI() || gameState.getPlayer() == 2){
-					if(!colourBlindMode){
-						g.setColor(new Color(255,255,100));
+				if(!colourBlindMode){
+					if(!isWinPiece && gameFinished){
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinR.png"));
 					} else {
-						g.setColor(new Color(100,255,100));
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinR.png"));
 					}
+				} else {
+					if(!isWinPiece && gameFinished){
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinRColourBlind.png"));
+					} else {
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinRColourBlind.png"));
+					}
+				}
+			} else if (row[i] == 3){
+				if(!colourBlindMode){
+					if(!isWinPiece && gameFinished){
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinGDark.png"));
+					} else {
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinG.png"));
+					}
+				} else {
+					if(!isWinPiece && gameFinished){
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinGColourBlind.png"));
+					} else {
+						newPiece = new ImageIcon(getClass().getResource("/Art/CoinGColourBlind.png"));
+					}
+				}
+			} else if ((i == 0 || row[i-1] != 0) && !gameFinished && mouseEntered){
+				if((gameState.isAI() || (gameState.getPlayer() == 2 && gameState.getNumPlayers() == 2)) || gameState.getPlayer() == 3){
+					g.setColor(new Color(255,255,100));
+				} else if(gameState.getPlayer() == 2 && gameState.getNumPlayers() == 3){
+					g.setColor(new Color(100,255,100));
 				} else {
 					g.setColor(new Color(255,100,100));
 				}
+				g.fillOval(30, 670-110*i, 90, 90);
 			} else {
 				
 			}
@@ -161,7 +168,14 @@ public class ColumnView extends JPanel{
 			
 			
 		}
-		ImageIcon column = new ImageIcon(getClass().getResource("Art/board.png"));
+		ImageIcon column = null;
+		if(mouseClicked && gameState.isRunning()){
+			column = new ImageIcon(getClass().getResource("/Art/boardpress.png"));
+		} else if (mouseEntered && gameState.isRunning()){
+			column = new ImageIcon(getClass().getResource("/Art/boardhover.png"));
+		} else {
+			column = new ImageIcon(getClass().getResource("/Art/board.png"));
+		}
 		column.paintIcon(this,g,0,100);
 		if(pieceFalling){
 			timeThing.start();

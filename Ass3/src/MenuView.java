@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +14,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -20,11 +22,15 @@ import javax.swing.JRadioButton;
 @SuppressWarnings("serial")
 public class MenuView extends JPanel{
 
-	public MenuView(JButton singlePlayer, JButton multiPlayer, JButton colourBlind, JPanel easy, JPanel medium, JPanel hard){
+	public MenuView(JButton singlePlayer, JButton multiPlayer, JButton threePlayer, JButton colourBlind, JButton easy, JButton medium, JButton hard){
 		super();
 		setBackground(Color.LIGHT_GRAY);
 		setPreferredSize(new Dimension(1250,800));
 		setMaximumSize(new Dimension(1250,800));
+		Container startButtons = new Container();
+		Container diffButtons = new Container();
+		startButtons.setLayout(new BoxLayout(startButtons, BoxLayout.X_AXIS));
+		diffButtons.setLayout(new BoxLayout(diffButtons, BoxLayout.X_AXIS));
 		
 		singlePlayer.setBorder(BorderFactory.createEmptyBorder());
 		singlePlayer.setAlignmentX(CENTER_ALIGNMENT);
@@ -32,94 +38,50 @@ public class MenuView extends JPanel{
 		multiPlayer.setBorder(BorderFactory.createEmptyBorder());
 		multiPlayer.setAlignmentX(CENTER_ALIGNMENT);
 		
-		easy.setBackground(Color.RED);
-		easy.setPreferredSize(new Dimension(300,250));
-		easy.setMaximumSize(new Dimension(300,250));
+		threePlayer.setBorder(BorderFactory.createEmptyBorder());
+		threePlayer.setAlignmentX(CENTER_ALIGNMENT);
 		
-		medium.setBackground(new Color(0,0,200));
-		medium.setPreferredSize(new Dimension(300,250));
-		medium.setMaximumSize(new Dimension(300,250));
+		startButtons.add(singlePlayer);
+		startButtons.add(Box.createRigidArea(new Dimension(15,0)));
+		startButtons.add(multiPlayer);
+		startButtons.add(Box.createRigidArea(new Dimension(15,0)));
+		startButtons.add(threePlayer);
 		
-		hard.setBackground(Color.RED);
-		hard.setPreferredSize(new Dimension(300,250));
-		hard.setMaximumSize(new Dimension(300,250));
+		easy.setBorder(BorderFactory.createEmptyBorder());
+		easy.setAlignmentX(CENTER_ALIGNMENT);
 		
-		GroupLayout menuLayout = new GroupLayout(this);
-		setLayout(menuLayout);
-		menuLayout.setAutoCreateGaps(true);
-		menuLayout.setAutoCreateContainerGaps(true);
-		menuLayout.setHorizontalGroup(
-				menuLayout.createSequentialGroup()
-					.addGroup(menuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addComponent(easy)
-						.addComponent(medium)
-						.addComponent(hard))
-					.addGroup(menuLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-						.addComponent(singlePlayer)
-						.addComponent(multiPlayer)
-						.addComponent(colourBlind))
-		);
-		menuLayout.setVerticalGroup(
-				menuLayout.createSequentialGroup()
-					.addGroup(menuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addComponent(easy)
-						.addComponent(singlePlayer))
-					.addGroup(menuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addComponent(medium)
-						.addComponent(multiPlayer))
-					.addGroup(menuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addComponent(hard)
-						.addComponent(colourBlind))
-		);
-		add(singlePlayer);
-		add(multiPlayer);
-		add(easy);
-		add(medium);
-		add(hard);
+		medium.setBorder(BorderFactory.createEmptyBorder());
+		medium.setAlignmentX(CENTER_ALIGNMENT);
+		
+		hard.setBorder(BorderFactory.createEmptyBorder());
+		hard.setAlignmentX(CENTER_ALIGNMENT);
+		
+		colourBlind.setBorder(BorderFactory.createEmptyBorder());
+		colourBlind.setAlignmentX(CENTER_ALIGNMENT);
+		
+		diffButtons.add(easy);
+		diffButtons.add(Box.createRigidArea(new Dimension(10,0)));
+		diffButtons.add(medium);
+		diffButtons.add(Box.createRigidArea(new Dimension(10,0)));
+		diffButtons.add(hard);
+		diffButtons.add(Box.createRigidArea(new Dimension(100,0)));
+		diffButtons.add(colourBlind);
+		
+		BoxLayout menuSetup = (new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(menuSetup);
+		
+		add(Box.createRigidArea(new Dimension(0,200)));
+		add(startButtons);
+		add(Box.createRigidArea(new Dimension(0,100)));
+		add(diffButtons);
+		add(Box.createRigidArea(new Dimension(0,100)));
+
 		revalidate();
 	}
-	//private ArrayList<Dimensions> CircleSpots = new ArrayList<Dimensions>();
-	public void addContainer(JButton reset, JButton back){
-			
-		Container layout = new Container();
-		
-		
-		layout.setLayout(new BoxLayout(layout, BoxLayout.Y_AXIS));
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	    
-	    // Group the radio buttons.
-	    
-
-	    // Register a listener for the radio buttons.
-	    //RadioListener myListener = new RadioListener();
-	   
-	   // firstButton.addChangeListener(myListener);
-	  //  firstButton.addItemListener(myListener);
-	    
-	  //  secondButton.addChangeListener(myListener);
-	  //  secondButton.addItemListener(myListener);
-	  
-	    
-	   
-        
-      
-        
-    
-    	
-        
-		
-		
-		
-	}
-	public void initButtons(){
-		
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		ImageIcon bg = new ImageIcon(getClass().getResource("/Art/bg.png"));
+		bg.paintIcon(this,g,0,0);
 	}
 }

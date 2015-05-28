@@ -18,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,15 +33,16 @@ public class BoardView extends JFrame{
 	private static boolean colourBlindMode = false;
 	private Board gameState;
 	private ArrayList<ColumnView> ColumnList;
-	private JPanel menu;
-	private JPanel test = new JPanel();
-	private JButton singlePlayer = new JButton("Single Player");
-	private JButton multiPlayer = new JButton("MultiPlayer");
-	private JPanel easy = new JPanel();
-	private JPanel medium = new JPanel();
-	private JPanel hard = new JPanel();
+	private SideView menu;
+	private JPanel test;
+	private JButton singlePlayer = new JButton(new ImageIcon(getClass().getResource("/Art/singleplayer.png")));
+	private JButton multiPlayer = new JButton(new ImageIcon(getClass().getResource("/Art/twoplayer.png")));
+	private JButton threePlayer = new JButton(new ImageIcon(getClass().getResource("/Art/threeplayer.png")));
+	private JButton easy = new JButton(new ImageIcon(getClass().getResource("/Art/easy.png")));
+	private JButton medium = new JButton(new ImageIcon(getClass().getResource("/Art/mediumpressed.png")));
+	private JButton hard = new JButton(new ImageIcon(getClass().getResource("/Art/hard.png")));
 	private JButton backButton = new JButton("Back");
-	private JButton colourBlind = new JButton("Colourblind mode");
+	private JButton colourBlind = new JButton(new ImageIcon(getClass().getResource("/Art/colourblind.png")));
 	private Container Columns;
 	private Timer AIDelay;
 	
@@ -57,7 +59,7 @@ public class BoardView extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	public void initBView(boolean AIGame, int numPlayers){
-		gameState = new Board();
+		gameState = new Board(numPlayers);
 		gameState.toggleAI(AIGame);
 		gameState.setAI(AISetting);
 		gameState.toggleGameState(true);
@@ -70,17 +72,23 @@ public class BoardView extends JFrame{
 			ColumnList.get(i).setMaximumSize(new Dimension(150,800));
 			ColumnList.get(i).addMouseListener(new MouseAdapter(){
 				public void mouseReleased(MouseEvent e){
+					
+					menu.repaint();
 					if(gameState.hasWon() || gameState.checkDraw()){
 						gameState.toggleGameState(false);
 						for(int i = 0; i < 7; i++){
 							ColumnList.get(i).paintWinPieces();
 						}
+						
+						
 					}
 					if(gameState.isAI() && gameState.isRunning() && gameState.getPlayer() == 1){
 						gameState.makeAITurn();
 						AIDelay.start();
+						
+						
 					}
-					
+					 
 				}
 			});
 		}
@@ -96,7 +104,7 @@ public class BoardView extends JFrame{
 							ColumnList.get(i).paintWinPieces();
 						}
 					}
-				
+					menu.repaint();
 				AIDelay.stop();
 			}
 			
@@ -113,7 +121,7 @@ public class BoardView extends JFrame{
 			
 		});
 		
-		menu = new JPanel();
+		menu = new SideView(gameState, colourBlindMode);
 		resetButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         menu.add(resetButton);
@@ -151,7 +159,7 @@ public class BoardView extends JFrame{
 	
 	public void initMenuScreen(){
 		
-		test = new MenuView(singlePlayer, multiPlayer, colourBlind, easy, medium, hard);
+		test = new MenuView(singlePlayer, multiPlayer, threePlayer, colourBlind, easy, medium, hard);
 		Columns.add(test);
 
 	}
@@ -162,10 +170,10 @@ public class BoardView extends JFrame{
 	
 	}
 	
-	public void initMultiPlayerGame(){
+	public void initMultiPlayerGame(int numPlayers){
 		
 		test.setVisible(false);
-		initBView(false, 2);
+		initBView(false, numPlayers);
 		
 	}
 	public void initButtons(){
@@ -178,8 +186,53 @@ public class BoardView extends JFrame{
 		
 		multiPlayer.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				initMultiPlayerGame();
+				initMultiPlayerGame(2);
 			}	
+		});
+		threePlayer.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				initMultiPlayerGame(3);
+			}
+			
+		});
+		easy.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(AISetting == 1){
+					AISetting = 0;
+					easy.setIcon(new ImageIcon(getClass().getResource("/Art/easypressed.png")));
+					medium.setIcon(new ImageIcon(getClass().getResource("/Art/medium.png")));
+				} else if(AISetting == 2){
+					AISetting = 0;
+					easy.setIcon(new ImageIcon(getClass().getResource("/Art/easypressed.png")));
+					hard.setIcon(new ImageIcon(getClass().getResource("/Art/hard.png")));
+				}
+			}
+		});
+		medium.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(AISetting == 0){
+					AISetting = 1;
+					medium.setIcon(new ImageIcon(getClass().getResource("/Art/mediumpressed.png")));
+					easy.setIcon(new ImageIcon(getClass().getResource("/Art/easy.png")));
+				} else if(AISetting == 2){
+					AISetting = 1;
+					medium.setIcon(new ImageIcon(getClass().getResource("/Art/mediumpressed.png")));
+					hard.setIcon(new ImageIcon(getClass().getResource("/Art/hard.png")));
+				}
+			}
+		});
+		hard.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(AISetting == 0){
+					AISetting = 2;
+					hard.setIcon(new ImageIcon(getClass().getResource("/Art/hardpressed.png")));
+					easy.setIcon(new ImageIcon(getClass().getResource("/Art/easy.png")));
+				} else if(AISetting == 1){
+					AISetting = 2;
+					hard.setIcon(new ImageIcon(getClass().getResource("/Art/hardpressed.png")));
+					medium.setIcon(new ImageIcon(getClass().getResource("/Art/medium.png")));
+				}
+			}
 		});
 		backButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -190,142 +243,14 @@ public class BoardView extends JFrame{
 			public void actionPerformed(ActionEvent e){
 				if(!colourBlindMode){
 					colourBlindMode = true;
+					colourBlind.setIcon(new ImageIcon(getClass().getResource("/Art/colourblindpressed.png")));
 				} else {
 					colourBlindMode = false;
+					colourBlind.setIcon(new ImageIcon(getClass().getResource("/Art/colourblind.png")));
 				}
 			}
 		});
-		
-		//easy.setAlignmentX(LEFT_ALIGNMENT);
-		easy.addMouseListener(new MouseListener(){
-			
 
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				if(AISetting!= 0){
-					easy.setBackground(Color.BLUE);
-				}
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				if(AISetting == 0){
-					easy.setBackground(new Color(0,0,200));
-				} else {
-					easy.setBackground(Color.RED);
-				}
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				AISetting = 0;
-				easy.setBackground(new Color(0,0,200));
-				medium.setBackground(Color.RED);
-				hard.setBackground(Color.RED);
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		medium.addMouseListener(new MouseListener(){
-			
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				if(AISetting!= 1){
-					medium.setBackground(Color.BLUE);
-				}
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				if(AISetting == 1){
-					medium.setBackground(new Color(0,0,200));
-				} else {
-					medium.setBackground(Color.RED);
-				}
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				AISetting = 1;
-				easy.setBackground(Color.RED);
-				medium.setBackground(new Color(0,0,200));
-				hard.setBackground(Color.RED);
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		hard.addMouseListener(new MouseListener(){
-			
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				if(AISetting!= 2){
-					hard.setBackground(Color.BLUE);
-				}
-				
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				if(AISetting == 2){
-					hard.setBackground(new Color(0,0,200));
-				} else {
-					hard.setBackground(Color.RED);
-				}
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				AISetting = 2;
-				easy.setBackground(Color.RED);
-				medium.setBackground(Color.RED);
-				hard.setBackground(Color.BLUE);
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 	}
 	public void returnToMenu(){

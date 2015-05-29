@@ -1,52 +1,25 @@
+//package ass3;
 import java.util.Random;
 
 public class Player {
-    private static final int DIFFICULTY_EASY = 0;
-    private static final int DIFFICULTY_MEDIUM = 1;
-    private final int ROW_SIZE = 6;
-    private final int COL_SIZE = 7;
-    private final int EMPTY_SPACE = 0;
-    private int difficulty;
+	private int difficulty;
 
+	
 
-    /**
-     * Construct an AI player with the given difficulty level.
-     */
-    public Player(int difficulty) {
-        this.difficulty = difficulty;
-    }
+	private final int DIFFICULTY_EASY = 0;
+	private final int DIFFICULTY_MEDIUM = 1;
 
-    /**
-     * @return the ID number of the player
-     */
-    public int getPlayer() {
-        return player;
-    }
+	//Create AI player with give difficulty setting
+	public Player(int difficulty){
+		
+		this.difficulty = difficulty;
 
-    /**
-     * @return the difficulty of the game
-     */
-    public int getDifficulty() {
-        return difficulty;
-    }
+		
+	}
 
+	
 
-    /**
-     * Sets the difficulty level of the AI
-     *
-     * @param difficulty the difficulty level of the AI
-     */
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    /**
-     * Gets the AI's move
-     *
-     * @param board the state of the board
-     * @return the AI's column number choice.
-     */
-    public int makeMove(int board[][]){
+	public int makeMove(int board[][]){
 		if (difficulty == DIFFICULTY_EASY) {
 			//Attempts to get centre piece
 			if(board[0][3] == 0){
@@ -288,74 +261,79 @@ public class Player {
 	}
 
 
-    //todo - write javadoc. Not sure what this method does
+	
 
-    /**
-     * @param testBoard
-     * @param column
-     * @param player
-     * @param blankPieces
-     * @return
-     */
-    public boolean findPiece(int testBoard[][], int column, int player, int blankPieces) {
-        int i;
-        boolean foundCheck = false;
+	
+	
 
-        if (testBoard[5][column] == EMPTY_SPACE) {
-            for (i = 0; i < ROW_SIZE && !foundCheck; i++) {
-                if (testBoard[i][column] == EMPTY_SPACE) {
-                    foundCheck = true;
-                    testBoard[i][column] = player;
-                    if (testForWin(testBoard, player, blankPieces)) {
-                        testBoard[i][column] = EMPTY_SPACE;
-                        return true;
-                    } else {
-                        testBoard[i][column] = EMPTY_SPACE;
-                    }
-                }
-            }
-            foundCheck = false;
-        }
-        return false;
-    }
 
-    //todo - write javadoc. Not sure what this method does
 
-    /**
-     * @param board
-     * @param column
-     * @param player
-     * @param blankPieces
-     * @return
-     */
-    public boolean testPiece(int board[][], int column, int player, int blankPieces) {
-        int i;
-        boolean foundCheck = false;
+	
+	
+	public void setDifficulty(int newDifficulty) {this.difficulty = newDifficulty; }
+	
+	public boolean findPiece(int testBoard[][],int column, int player, int blankPieces){
 
-        for (i = 0; i < 5 && !foundCheck; i++) {
-            if (board[i][column] == EMPTY_SPACE) {
-                foundCheck = true;
-                board[i + 1][column] = player;
-                if (testForWin(board, player, blankPieces)) {
-                    board[i + 1][column] = EMPTY_SPACE;
-                    return true;
-                } else {
-                    board[i + 1][column] = EMPTY_SPACE;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if the given player has won
-     *
-     * @param board  the state of the board
-     * @param player the player ID number
-     * @return <code>true</code> if the player has won, or otherwise
-     * <code>false</code>
-     */
-    public boolean hasWon(int[][] boardState, int player){
+		int j;
+		boolean foundCheck = false;
+			if(testBoard[5][column] == 0){
+				for(j = 0; j < 6 && !foundCheck;j++){
+					if(testBoard[j][column] == 0){
+						foundCheck = true;
+						testBoard[j][column] = player;
+						if(blankPieces > 0){
+							if(testForWin(testBoard,player,blankPieces)){
+								testBoard[j][column] = 0;
+								if(!testForWin(testBoard,player,blankPieces)){
+									return true;
+								}
+							} else {
+								testBoard[j][column] = 0;
+							}
+						} else {
+							if(hasWon(testBoard,player)){
+								testBoard[j][column] = 0;
+								return true;
+							} else {
+								testBoard[j][column] = 0;
+							}
+						}
+					}
+				}
+			}
+		return false;
+	}
+		
+	
+	public boolean testPiece(int board[][], int column, int player, int blankPieces){
+		int i;
+		boolean foundCheck = false;
+		for(i = 0; i < 5 && !foundCheck;i++){
+			if(board[i][column] == 0){
+				foundCheck = true;
+				board[i+1][column] = player;
+				if(blankPieces > 0){
+					if(testForWin(board, player, blankPieces)){
+						board[i+1][column] = 0;
+						if(!testForWin(board,player,blankPieces)){
+							return true;
+						}
+					} else {
+						board[i+1][column] = 0;
+					}		
+				} else {
+					if(hasWon(board,player)){
+						board[i+1][column] = 0;
+						return true;
+					} else {
+						board[i+1][column] = 0;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	public boolean hasWon(int[][] boardState, int player){
 
 		int i;
 		int j;

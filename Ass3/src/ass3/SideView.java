@@ -1,4 +1,4 @@
-//package ass3;
+package ass3;
 
 import java.awt.Graphics;
 

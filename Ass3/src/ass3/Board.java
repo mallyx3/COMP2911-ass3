@@ -199,14 +199,14 @@ public class Board {
 		return player;
 	}
 
-	public boolean isAI(){
+	public boolean isAIGame(){
 		return AIGame;
 	}
 	public int getAITurn(){
 		isAITurn = false;
 		return AI.makeMove(boardState);
 	}
-	public void toggleAI(boolean AItoggle){
+	public void toggleAIGame(boolean AItoggle){
 		if(!gameRunning){
 			AIGame = AItoggle;
 		}
@@ -238,6 +238,7 @@ public class Board {
 	public void setAI(int difficulty){
 		AI.setDifficulty(difficulty);
 	}
+	
 	public boolean isWinPiece(int column, int row){
 		if(winningPieces.size() == 0){
 			return false;

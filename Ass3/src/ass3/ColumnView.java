@@ -141,7 +141,7 @@ public class ColumnView extends JPanel{
 					}
 				}
 			} else if ((i == 0 || row[i-1] != 0) && !gameFinished && mouseEntered){
-				if((gameState.isAI() || (gameState.getPlayer() == 2 && gameState.getNumPlayers() == 2)) || gameState.getPlayer() == 3){
+				if((gameState.isAIGame() || (gameState.getPlayer() == 2 && gameState.getNumPlayers() == 2)) || gameState.getPlayer() == 3){
 					g.setColor(new Color(255,255,200));
 				} else if(gameState.getPlayer() == 2 && gameState.getNumPlayers() == 3){
 					g.setColor(new Color(200,255,200));

@@ -55,9 +55,9 @@ public class BoardView extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	public void initBView(boolean AIGame, int numPlayers){
+	public void initGameView(boolean AIGame, int numPlayers){
 		gameState = new Board(numPlayers);
-		gameState.toggleAI(AIGame);
+		gameState.toggleAIGame(AIGame);
 		gameState.setAI(AISetting);
 		gameState.toggleGameState(true);
 		ColumnList = new ArrayList<ColumnView>();
@@ -79,7 +79,7 @@ public class BoardView extends JFrame{
 						
 						
 					}
-					if(gameState.isAI() && gameState.isRunning() && gameState.getPlayer() == 1){
+					if(gameState.isAIGame() && gameState.isRunning() && gameState.getPlayer() == 1){
 						gameState.makeAITurn();
 						AIDelay.start();
 					}
@@ -168,14 +168,14 @@ public class BoardView extends JFrame{
 	public void initSinglePlayerGame(){
 		
 		test.setVisible(false);
-		initBView(true, 2);
+		initGameView(true, 2);
 	
 	}
 	
 	public void initMultiPlayerGame(int numPlayers){
 		
 		test.setVisible(false);
-		initBView(false, numPlayers);
+		initGameView(false, numPlayers);
 		
 	}
 	public void initButtons(){

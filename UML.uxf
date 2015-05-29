@@ -4,95 +4,73 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>0</y>
-      <w>210</w>
-      <h>190</h>
-    </coordinates>
-    <panel_attributes>Main
---
-gameState: Board
---
-+main(args: String[])
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>0</x>
-      <y>290</y>
-      <w>250</w>
-      <h>190</h>
+      <x>340</x>
+      <y>540</y>
+      <w>350</w>
+      <h>570</h>
     </coordinates>
     <panel_attributes>Board
---
--colSize: int
--rowSize: int
--playerArr: ArrayList&lt;Player&gt;
--stateArr: ArrayList&lt;State&gt;
---
-+Board(colSize: int, rowSize: int)
-+addPiece(column: int, player: int)
-+hasWon(player: int)
-+print()
-+hasWon()
 
-</panel_attributes>
+--
+- boardState: int[][]
+	- colSize: int
+	- rowSize: int
+	- player: int
+	- numPlayers: int
+	- winRequired: int
+	- numPieces: int
+	- AI: Player
+	- AIGame: boolean
+	- gameRunning: boolean
+	- pieceFalling: boolean
+	- isAITurn: boolean
+	- winningPieces: ArrayList&lt;Coordinates&gt;
+--
++ Board(numPlayers: int)
++ addPiece(column: int)
++ hasWon()
++ checkDraw()
++ print()
++ hasWon()
++ getPlayer()
++ isAI()
++ getAITurn()
++ toggleAIGame(toggleAI: boolean)
++ toggleGameState(running: boolean)
++ resetGame()
++ isRunning()
++ getNumPlayers()
++ setAI(difficulty: int)
++ isWinPiece(column: int, row: int)
++ pieceFalling()
++ makeAITurn()
++ ifAITurn()
++ ifFalling()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>310</x>
-      <y>30</y>
-      <w>210</w>
-      <h>190</h>
+      <x>800</x>
+      <y>870</y>
+      <w>300</w>
+      <h>230</h>
     </coordinates>
     <panel_attributes>Player
+
 --
--player(player: int)
+- player(difficulty: int)
 --
-+Player(player: int)
-+getNextAction()
-+getPlayer()
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>580</x>
-      <y>150</y>
-      <w>210</w>
-      <h>190</h>
-    </coordinates>
-    <panel_attributes>Ai
---
--difficulty: int
---
-+getNextBestMove()
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>330</x>
-      <y>300</y>
-      <w>210</w>
-      <h>190</h>
-    </coordinates>
-    <panel_attributes>State
---
--prevState: State
--board: Board
--ai: Ai
---
-+getNextState():State
-+getPrevState():State
-+setAiDifficulty()
-+getAiDifficulty():Integer
++ Player(difficulty: int)
++ setDifficulty(difficulty: int)
++ makeMove(board: int[][])
++ findPiece(board: int[][], column: int,
+                   player: int, blankPieces: int)
++ testPiece(board: int[][], column: int,
+                   player: int, blankPieces: int)
++ hasWon(board: int[][], player: int)
++ testForWin(board: int[][], player: int,
+                      blankPieces: int)
 
 </panel_attributes>
     <additional_attributes/>
@@ -100,49 +78,209 @@ gameState: Board
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>100</x>
-      <y>180</y>
-      <w>30</w>
-      <h>130</h>
+      <x>680</x>
+      <y>640</y>
+      <w>190</w>
+      <h>250</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
+
+</panel_attributes>
+    <additional_attributes>170.0;230.0;170.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>910</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Coordinates
+--
+ - column: int
+ - row: int
+--
++ Coordinate(column: int, row: int)
++ getCol()
++ getRow()</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>240</x>
-      <y>120</y>
-      <w>110</w>
+      <x>180</x>
+      <y>630</y>
+      <w>180</w>
       <h>300</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
 
-m1=0..n</panel_attributes>
-    <additional_attributes>70.0;10.0;10.0;280.0</additional_attributes>
+</panel_attributes>
+    <additional_attributes>10.0;280.0;10.0;10.0;160.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>850</x>
+      <y>140</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>ColumnView 
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>0</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>BoardView
+--
+-id: Long
+-ClassAttribute: Long
+--
++ main(arg: Strings[])
++ BoardView()
++ initButtons()
++ initMenuScreen()
++ initSinglePlayerGame()
++ initMultiPlayerGame(numPlyaers: int)
++ initGameView(AIGame: boolean, numPlayers: int)
++</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>260</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>MenuView
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>250</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>SideView
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>320</y>
+      <w>280</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
+
+</panel_attributes>
+    <additional_attributes>10.0;280.0;260.0;280.0;260.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>430</y>
+      <w>100</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
+
+</panel_attributes>
+    <additional_attributes>10.0;130.0;80.0;130.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>460</x>
+      <y>180</y>
+      <w>30</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
+
+</panel_attributes>
+    <additional_attributes>10.0;360.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>240</x>
-      <y>390</y>
-      <w>110</w>
-      <h>40</h>
+      <y>100</y>
+      <w>190</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
-m1=0..n</panel_attributes>
-    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
+
+</panel_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0;170.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>530</x>
-      <y>240</y>
-      <w>70</w>
-      <h>170</h>
+      <x>610</x>
+      <y>50</y>
+      <w>300</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
-m1=1    </panel_attributes>
-    <additional_attributes>50.0;10.0;10.0;150.0</additional_attributes>
+
+</panel_attributes>
+    <additional_attributes>280.0;90.0;280.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>610</x>
+      <y>140</y>
+      <w>110</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
+
+</panel_attributes>
+    <additional_attributes>90.0;110.0;90.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

@@ -28,7 +28,7 @@ public class SideView extends JPanel{
 			connectTitle = new ImageIcon(getClass().getResource("/Art/Connect3.png"));
 		}
 		//System.out.printf("%d\n", gameState.getPlayer());
-		if(gameState.getPlayer() == 1 && gameState.isAI()){
+		if(gameState.getPlayer() == 1 && gameState.isAIGame()){
 			playerLabel = new ImageIcon(getClass().getResource("/Art/Computer.png"));
 			if(colourBlind){
 				playerPiece = new ImageIcon(getClass().getResource("/Art/CoinRColourBlind.png"));

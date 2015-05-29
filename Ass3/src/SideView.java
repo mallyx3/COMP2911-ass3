@@ -19,7 +19,8 @@ public class SideView extends JPanel {
 
     //todo - write javadoc. Not sure what this method does
     /**
-     *
+     * Paints whose turn it is in the side bar
+     * 
      * @param g
      */
     @Override

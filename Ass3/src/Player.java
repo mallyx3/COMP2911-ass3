@@ -7,7 +7,7 @@ public class Player {
     private final int COL_SIZE = 7;
     private final int EMPTY_SPACE = 0;
     private int difficulty;
-    private int player = 2;
+
 
     /**
      * Construct an AI player with the given difficulty level.
@@ -30,14 +30,6 @@ public class Player {
         return difficulty;
     }
 
-    /**
-     * Sets the ID number of the player
-     *
-     * @param player the player's ID number
-     */
-    public void setPlayer(int player) {
-        this.player = player;
-    }
 
     /**
      * Sets the difficulty level of the AI
@@ -54,159 +46,247 @@ public class Player {
      * @param board the state of the board
      * @return the AI's column number choice.
      */
-    public int makeMove(int board[][]) {
-        int i;
-        int j;
+    public int makeMove(int board[][]){
+		if (difficulty == DIFFICULTY_EASY) {
+			//Attempts to get centre piece
+			if(board[0][3] == 0){
+				return 3;
+			} else if(board[0][2] == 0 && board[0][3] != 2){
+				return 2;
+			}
+			
+			//Checks for any potential winning moves
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 2, 0)){
+				return j;
+				}
+			}
+			//Checks for any blocking moves
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 0)){
 
-        //Make easy difficulty AI move
-        if (difficulty == DIFFICULTY_EASY) {
-            if (board[0][3] == EMPTY_SPACE) {
-                return 3;
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (findPiece(board, j, 2, 0)) {
-                    return j;
-                }
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (findPiece(board, j, 1, 0)) {
-                    return j;
-                }
-            }
-            Random rand = new Random();
-            i = rand.nextInt(COL_SIZE);
-            while (board[5][i] != EMPTY_SPACE) {
-                i = rand.nextInt(COL_SIZE);
-            }
-            return i;
-            //Make medium difficulty AI move
-        } else if (difficulty == DIFFICULTY_MEDIUM) {
-            if (board[0][3] == EMPTY_SPACE) {
-                return 3;
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (findPiece(board, j, 2, 0)) {
-                    return j;
-                }
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (findPiece(board, j, 1, 0)) {
-                    return j;
-                }
-            }
-            int[] checkPieces = new int[COL_SIZE];
-            for (j = 0; j < COL_SIZE; j++) {
-                checkPieces[j] = 0;
-                if (testPiece(board, j, 1, 0)) {
-                    checkPieces[j] = 2;
-                }
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (testPiece(board, j, 2, 0) && checkPieces[j] != 2) {
-                    checkPieces[j] = 1;
-                }
-            }
-            boolean checkForLegal = false;
-            int k = 0;
-            for (j = 0; j < COL_SIZE; j++) {
-                if (checkPieces[j] == 0 && board[5][j] == EMPTY_SPACE) {
-                    checkForLegal = true;
-                }
-            }
-            if (!checkForLegal) {
-                k++;
-                for (j = 0; j < COL_SIZE; j++) {
-                    if (checkPieces[j] <= 1 && board[5][j] == EMPTY_SPACE) {
-                        checkForLegal = true;
-                    }
-                }
-            }
-            if (!checkForLegal) {
-                k++;
-            }
-            System.out.printf("%d\n", k);
-            Random rand = new Random();
-            i = rand.nextInt(COL_SIZE);
-            while (checkPieces[i] > k || (checkPieces[i] <= k && board[5][i] != EMPTY_SPACE)) {
-                i = rand.nextInt(COL_SIZE);
-            }
-            return i;
+				return j;
+				}
+			}
+			//Creates a list of moves which will result in a loss next turn
+			int[] checkPieces = new int[7];
+			for(int j = 0; j < 7; j++){
+				checkPieces[j] = 0;
+				if(testPiece(board,j,1,0)){
+					checkPieces[j] = 2;
+				}
+			}
+			//Adds to list any moves that can result in a win being blocked next turn
+			for(int j = 0; j < 7; j++){
+				if(testPiece(board,j,2,0) && checkPieces[j] < 3){
+					checkPieces[j] = 1;
+				}
+			}
+			boolean checkForLegal = false;
+			int k = 0;
+			for(int j = 0; j < 7; j++){
+				if(checkPieces[j] == 0 && board[5][j] == 0){
+					checkForLegal = true;
+				}
+			}
+			if(!checkForLegal){
+				k++;
+				for(int j = 0; j < 7; j++){
+					if(checkPieces[j] <= 1 && board[5][j] == 0){
+						checkForLegal = true;
+					}
+				}
+			}
+			if(!checkForLegal){
+				k++;
+			}
+			
+			Random rand = new Random();
+			int i = rand.nextInt(7);
+			while(checkPieces[i] > k || (checkPieces[i] <= k && board[5][i] != 0)){
+				i = rand.nextInt(7);
+			}
+			return i;
+		} else if (difficulty == DIFFICULTY_MEDIUM) {
+			//Attempts to get centre piece
+			if(board[0][3] == 0){
+				return 3;
+			} else if(board[0][2] == 0 && board[0][3] != 2){
+				return 2;
+			}
+			
+			//Checks for any potential winning moves
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 2, 0)){
+				return j;
+				}
+			}
+			//Checks for any blocking moves
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 0)){
 
-            //Make hard difficulty AI move
-        } else {
-            if (board[0][3] == EMPTY_SPACE) {
-                return 3;
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (findPiece(board, j, 2, 0)) {
-                    return j;
-                }
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (findPiece(board, j, 1, 0)) {
-                    return j;
-                }
-            }
-            int[] checkPieces = new int[COL_SIZE];
-            for (j = 0; j < COL_SIZE; j++) {
-                checkPieces[j] = EMPTY_SPACE;
-                if (testPiece(board, j, 1, 0)) {
-                    checkPieces[j] = 2;
-                }
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (testPiece(board, j, 2, 0) && checkPieces[j] != 2) {
-                    checkPieces[j] = 1;
-                }
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (findPiece(board, j, 1, 1) && checkPieces[j] == EMPTY_SPACE) {
-                    return j;
-                }
-            }
+				return j;
+				}
+			}
+			//Creates a list of moves which will result in a loss next turn
+			int[] checkPieces = new int[7];
+			for(int j = 0; j < 7; j++){
+				checkPieces[j] = 0;
+				if(testPiece(board,j,1,0)){
+					checkPieces[j] = 2;
+				}
+			}
+			//Adds to list any moves that can result in a win being blocked next turn
+			for(int j = 0; j < 7; j++){
+				if(testPiece(board,j,2,0) && checkPieces[j] < 3){
+					checkPieces[j] = 1;
+				}
+			}
+			
+			//Using blank spaces, attempts to block any attempts to setup double win condition
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 1) && checkPieces[j] == 0){
+				return j;
+				}
+			}
+			//Uses blank spaces to help setup potential win moves
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j,2,1) && checkPieces[j] < 1){
+					return j;
+				}
+			}
+			
+			boolean checkForLegal = false;
+			int k = 0;
+			for(int j = 0; j < 7; j++){
+				if(checkPieces[j] == 0 && board[5][j] == 0){
+					checkForLegal = true;
+				}
+			}
+			if(!checkForLegal){
+				k++;
+				for(int j = 0; j < 7; j++){
+					if(checkPieces[j] <= 1 && board[5][j] == 0){
+						checkForLegal = true;
+					}
+				}
+			}
+			if(!checkForLegal){
+				k++;
+			}
 
-            for (j = 0; j < COL_SIZE; j++) {
-                if (testPiece(board, j, 2, 1) && checkPieces[j] == EMPTY_SPACE) {
-                    return j;
-                }
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (findPiece(board, j, 2, 1) && checkPieces[j] < 2) {
-                    return j;
-                }
-            }
-            for (j = 0; j < COL_SIZE; j++) {
-                if (testPiece(board, j, 2, 1) && checkPieces[j] < 2) {
-                    return j;
-                }
-            }
-            boolean checkForLegal = false;
-            int k = 0;
-            for (j = 0; j < COL_SIZE; j++) {
-                if (checkPieces[j] == EMPTY_SPACE && board[5][j] == EMPTY_SPACE) {
-                    checkForLegal = true;
-                }
-            }
-            if (!checkForLegal) {
-                k++;
-                for (j = EMPTY_SPACE; j < COL_SIZE; j++) {
-                    if (checkPieces[j] <= 1 && board[5][j] == EMPTY_SPACE) {
-                        checkForLegal = true;
-                    }
-                }
-            }
-            if (!checkForLegal) {
-                k++;
-            }
-            System.out.printf("%d\n", k);
-            Random rand = new Random();
-            i = rand.nextInt(COL_SIZE);
-            while (checkPieces[i] > k || (checkPieces[i] <= k && board[5][i] != EMPTY_SPACE)) {
-                i = rand.nextInt(COL_SIZE);
-            }
-            return i;
-        }
-    }
+			Random rand = new Random();
+			int i = rand.nextInt(7);
+			while(checkPieces[i] > k || (checkPieces[i] <= k && board[5][i] != 0)){
+				i = rand.nextInt(7);
+			}
+			return i;
+		
+		//Return hard AI move
+		} else {
+			//Attempts to get centre piece
+			if(board[0][3] == 0){
+				return 3;
+			} else if(board[0][2] == 0 && board[0][3] != 2){
+				return 2;
+			}
+			
+			//Checks for any potential winning moves
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 2, 0)){
+				return j;
+				}
+			}
+			//Checks for any blocking moves
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 0)){
+					System.out.print("Did I win???\n");
+				return j;
+				}
+			}
+			//Creates a list of moves which will result in a loss next turn
+			int[] checkPieces = new int[7];
+			for(int j = 0; j < 7; j++){
+				checkPieces[j] = 0;
+				if(testPiece(board,j,1,0)){
+					checkPieces[j] = 3;
+				}
+			}
+			//Adds to list any moves that can result in a win being blocked next turn
+			for(int j = 0; j < 7; j++){
+				if(testPiece(board,j,2,0) && checkPieces[j] < 3){
+					checkPieces[j] = 2;
+				}
+			}
+			
+			//Using blank spaces, attempts to block any attempts to setup double win condition
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 1) && checkPieces[j] == 0){
+				return j;
+				}
+			}
+			//Uses blank spaces to help setup potential win moves
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j,2,1) && checkPieces[j] < 2){
+					return j;
+				}
+			}
+			for(int j = 0; j < 7;j++){
+				if(testPiece(board,j, 1, 1)){
+					checkPieces[j] = 1;
+				}
+			}
+			for(int j = 0; j < 7; j++){
+				if(testPiece(board,j,2,1) && checkPieces[j] < 2){
+					return j;
+				}
+			}
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 2, 2) && checkPieces[j] == 0){
+				return j;
+				}
+			}
+			for(int j = 0; j < 7;j++){
+				if(findPiece(board,j, 1, 2) && checkPieces[j] == 0){
+				return j;
+				}
+			}
+			boolean checkForLegal = false;
+			int k = 0;
+			for(int j = 0; j < 7; j++){
+				if(checkPieces[j] == 0 && board[5][j] == 0){
+					checkForLegal = true;
+				}
+			}
+			if(!checkForLegal){
+				k++;
+				for(int j = 0; j < 7; j++){
+					if(checkPieces[j] <= 1 && board[5][j] == 0){
+						checkForLegal = true;
+					}
+				}
+			}
+			if(!checkForLegal){
+				k++;
+				for(int j = 0; j < 7; j++){
+					if(checkPieces[j] <= 2 && board[5][j] == 0){
+						checkForLegal = true;
+					}
+				}
+			}
+			if(!checkForLegal){
+				k++;
+			}
+
+			Random rand = new Random();
+			int i = rand.nextInt(7);
+			while(checkPieces[i] > k || (checkPieces[i] <= k && board[5][i] != 0)){
+				i = rand.nextInt(7);
+			}
+			return i;
+		}
+	}
+
 
     //todo - write javadoc. Not sure what this method does
 
@@ -275,121 +355,217 @@ public class Player {
      * @return <code>true</code> if the player has won, or otherwise
      * <code>false</code>
      */
-    public boolean testForWin(int board[][], int player, int blankPieces) {
-        int i;
-        int j;
-        int winCount;
-        int blanks = 0;
-        int tempI = 0;
-        int tempJ = 0;
+    public boolean hasWon(int[][] boardState, int player){
 
-        //Horizontal check
-        for (tempI = 0; tempI < ROW_SIZE; tempI++) {
-            i = tempI;
-            for (tempJ = 0; tempJ < 4; tempJ++) {
-                j = tempJ;
-                for (i = 0; i < ROW_SIZE; i++) {
-                    winCount = 0;
-                    for (j = 0; j < COL_SIZE; j++) {
-                        if (board[i][j] == player) {
-                            winCount++;
+		int i;
+		int j;
+		int winCount;
 
-                        } else if (board[i][j] == EMPTY_SPACE && blankPieces != 0 && blanks < blankPieces) {
-                            winCount++;
-                            blanks++;
-                        } else {
-                            winCount = 0;
-                            blanks = 0;
-                        }
-                        if (winCount == 4) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        //Vertical check
-        for (i = 0; i < COL_SIZE; i++) {
-            winCount = 0;
-            for (j = 0; j < ROW_SIZE; j++) {
-                if (board[j][i] == player) {
-                    winCount++;
-                } else {
-                    winCount = 0;
-                    blanks = 0;
-                }
-                if (winCount == 4) {
-                    return true;
-                }
-            }
-        }
-        i = 0;
-        j = 0;
-        //Diagonal check
-        while (tempI < 3) {
-            i = tempI;
-            tempJ = 0;
-            while (tempJ < 4) {
-                j = tempJ;
-                winCount = 0;
-                while (winCount < 4 && i < ROW_SIZE && j < COL_SIZE) {
-                    if (board[i][j] == player) {
-                        winCount++;
-                        i++;
-                        j++;
-                    } else if (board[i][j] == EMPTY_SPACE && blankPieces != 0 &&
-                            blanks < blankPieces) {
-                        winCount++;
-                        blanks++;
-                        i++;
-                        j++;
-                    } else {
-                        blanks = 0;
-                        break;
-                    }
-                    if (winCount == 4) {
-                        return true;
-                    }
-                }
-                tempJ++;
-                i = tempI;
-            }
-            tempI++;
-        }
-        j = 0;
-        i = 3;
-        tempI = 3;
-        tempJ = 0;
-        while (tempI < ROW_SIZE) {
-            i = tempI;
-            tempJ = 0;
-            while (tempJ < 4) {
-                j = tempJ;
-                winCount = 0;
-                while (winCount < 4 && i >= 0 && j <= COL_SIZE) {
-                    if (board[i][j] == player) {
-                        winCount++;
-                        i--;
-                        j++;
-                    } else if (board[i][j] == EMPTY_SPACE && blankPieces != 0 &&
-                            blanks < blankPieces) {
-                        winCount++;
-                        blanks++;
-                        i--;
-                        j++;
-                    } else {
-                        blanks = 0;
-                        break;
-                    }
-                    if (winCount == 4) {
-                        return true;
-                    }
-                }
-                tempJ++;
-                i = tempI;
-            }
-            tempI++;
-        }
-        return false;
-    }
+		//Horizontal check
+		for(i = 0 ; i < 6 ; i++ ){
+			winCount = 0;
+			for(j = 0; j < 7; j++){
+				if(boardState[i][j] == player){
+					winCount++;
+					
+				} else {
+					winCount = 0;
+
+				}
+				if(winCount == 4){
+					return true;
+				}
+			}
+		}
+		//Vertical check
+		for(i = 0 ; i < 7 ; i++ ){
+			winCount = 0;
+			for(j = 0; j < 6 ; j++){
+				if(boardState[j][i] == player){
+					winCount++;
+
+				} else {
+					winCount = 0;
+				}
+				if(winCount == 4){
+					return true;
+				}
+			}
+		}
+		
+		int tempi = 0;
+		int tempj = 0;
+		i = 0; 
+		j = 0; 
+		while (tempi<3) {
+			i = tempi;
+			tempj = 0;
+			while (tempj<4) {
+				j = tempj;
+				winCount = 0;
+
+				while (winCount<4 && i < 6 && j < 7) {
+					if(boardState[i][j] == player){
+						winCount++;
+						i++;
+						j++;	
+					} else {
+						break;
+					}
+					if(winCount == 4){
+						return true;
+					}
+				}
+				tempj++;
+				i = tempi;
+			}
+			tempi++;				
+		}
+		
+		tempi = 3; i = 3; tempj = 0; j = 0;
+		while (tempi<6) {
+			i = tempi;
+			tempj = 0;
+			while (tempj<4) {
+				j = tempj;
+				winCount = 0;
+				while (winCount<4 && i >= 0 && j < 7) {
+					if(boardState[i][j] == player){
+						winCount++;
+
+						i--;
+						j++;	
+					} else {
+						break;
+					}
+					if(winCount == 4){
+						return true;
+					}
+				}
+				tempj++;
+				i = tempi;
+			}
+			tempi++;				
+		}		
+		return false;
+	}
+	public boolean testForWin(int board[][], int player, int blankPieces){
+		int i;
+		int j;
+		int winCount;
+		int blanks = 0;
+		int tempi = 0;
+		int tempj = 0;
+		//Horizontal check
+		for(tempi = 0;tempi < 6;tempi++){
+			i = tempi;
+			for(tempj = 0; tempj < 4; tempj++){
+				j = tempj;
+				for(i = 0 ; i < 6 ; i++ ){
+					winCount = 0;
+					for(j = 0; j < 7; j++){
+						if(board[i][j] == player){
+							winCount++;
+		
+						} else if(board[i][j] == 0 && blankPieces != 0 && blanks < blankPieces){
+							winCount++;
+							blanks++;
+						} else {
+							winCount = 0;
+							blanks = 0;
+						}
+						if(winCount == 4){
+							return true;
+						}
+					}
+				}
+			}
+		}
+		//Vertical check
+		for(i = 0 ; i < 7 ; i++ ){
+			winCount = 0;
+			for(j = 0; j < 6 ; j++){
+				if(board[j][i] == player){
+					winCount++;
+				} else if(board[j][i] == 0 && blanks < blankPieces && blankPieces < 2){
+					winCount++;
+					blanks++;
+				} else {
+					winCount = 0;
+					blanks = 0;
+				}
+				if(winCount == 4){
+					return true;
+				}
+			}
+		}
+		
+		
+		i = 0; 
+		j = 0; 
+		while (tempi<3) {
+			i = tempi;
+			tempj = 0;
+			while (tempj<4) {
+				j = tempj;
+				winCount = 0;
+
+				while (winCount<4 && i < 6 && j < 7) {
+					if(board[i][j] == player){
+						winCount++;
+						i++;
+						j++;	
+					} else if(board[i][j] == 0 && blankPieces != 0 && 
+							  blanks < blankPieces){
+						winCount++;
+						blanks++;
+						i++;
+						j++;
+					} else {
+						blanks = 0;
+						break;
+					}
+					if(winCount == 4){
+						return true;
+					}
+				}
+				tempj++;
+				i = tempi;
+			}
+			tempi++;				
+		}
+		
+		tempi = 3; i = 3; tempj = 0; j = 0;
+		while (tempi<6) {
+			i = tempi;
+			tempj = 0;
+			while (tempj<4) {
+				j = tempj;
+				winCount = 0;
+				while (winCount<4 && i >= 0 && j <= 7) {
+					if(board[i][j] == player){
+						winCount++;
+						i--;
+						j++;	
+					} else if(board[i][j] == 0 && blankPieces != 0 && 
+							  blanks < blankPieces){
+						winCount++;
+						blanks++;
+						i--;
+						j++;	
+					} else {
+						blanks = 0;
+						break;
+					}
+					if(winCount == 4){
+						return true;
+					}
+				}
+				tempj++;
+				i = tempi;
+			}
+			tempi++;				
+		}		
+		return false;
+	}
 }

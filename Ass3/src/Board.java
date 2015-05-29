@@ -43,51 +43,6 @@ public class Board {
         }
     }
 
-    /**
-     * Constructs the board class, optionally with the numbers of rows and columns
-     */
-    public Board(int rowSize, int colSize) {
-        this.boardState = new int[rowSize][colSize];
-        this.colSize = colSize;
-        this.rowSize = rowSize;
-        numPieces = 0;
-        int i;
-        int j;
-
-        for (i = 0; i < rowSize; i++) {
-            for (j = 0; j < colSize; j++) {
-                this.boardState[i][j] = 0;
-            }
-        }
-    }
-
-    /**
-     * @return the current state of the board
-     */
-    public int[][] getBoardState() {
-        return boardState;
-    }
-
-    /**
-     * @return the number of columns
-     */
-    public int getColSize() {
-        return colSize;
-    }
-
-    /**
-     * @return the number of rows
-     */
-    public int getRowSize() {
-        return rowSize;
-    }
-
-    /**
-     * @return the number of pieces on the board
-     */
-    public int getNumPieces() {
-        return numPieces;
-    }
 
     /**
      * @return the player number
@@ -110,12 +65,6 @@ public class Board {
         return gameRunning;
     }
 
-    /**
-     * @return the winning pieces array list coordinates
-     */
-    public ArrayList<Coordinates> getWinningPieces() {
-        return winningPieces;
-    }
 
     /**
      * @return <code>true</code> if it's the AI's turn, or otherwise <code>false</code>
@@ -131,12 +80,6 @@ public class Board {
         return numPlayers;
     }
 
-    /**
-     * @return the AI player
-     */
-    public Player getAI() {
-        return AI;
-    }
 
     /**
      * @return <code>true</code> if a game piece is falling, or otherwise <code>false</code>
@@ -153,50 +96,6 @@ public class Board {
         return AI.makeMove(boardState);
     }
 
-    /**
-     * Sets the board state
-     *
-     * @param boardState the replacement board state
-     */
-    public void setBoardState(int[][] boardState) {
-        this.boardState = boardState;
-    }
-
-    /**
-     * Sets the number of columns to be used in the game
-     *
-     * @param colSize the number of columns
-     */
-    public void setColSize(int colSize) {
-        this.colSize = colSize;
-    }
-
-    /**
-     * Sets the number of rows to be used in the game
-     *
-     * @param rowSize the number of rows
-     */
-    public void setRowSize(int rowSize) {
-        this.rowSize = rowSize;
-    }
-
-    /**
-     * Sets the number of pieces currently on the board
-     *
-     * @param newNumPieces the current number of pieces in game
-     */
-    public void setNumPieces(int newNumPieces) {
-        numPieces = newNumPieces;
-    }
-
-    /**
-     * Sets the player number
-     *
-     * @param playerNum the number of players
-     */
-    public void setPlayerNum(int playerNum) {
-        numPlayers = playerNum;
-    }
 
     /**
      * Set the difficulty of the game
@@ -207,68 +106,15 @@ public class Board {
         AI.setDifficulty(difficulty);
     }
 
-    /**
-     * Sets the player ID number
-     *
-     * @param player the ID number of the player
-     */
-    public void setPlayer(int player) {
-        this.player = player;
-    }
 
-    /**
-     * Sets the player AI
-     *
-     * @param AI the player AI
-     */
-    public void setAI(Player AI) {
-        this.AI = AI;
-    }
 
-    /**
-     * Sets if the game is with an AI or not
-     *
-     * @param AIGame whether the player is an AI or not
-     */
-    public void setAIGame(boolean AIGame) {
-        this.AIGame = AIGame;
-    }
-
-    /**
-     * Sets the game to be running
-     *
-     * @param gameRunning whether the game is running or not
-     */
-    public void setGameRunning(boolean gameRunning) {
-        this.gameRunning = gameRunning;
-    }
-
-    /**
-     * Sets whether the piece is falling or not
-     *
-     * @param pieceFalling whether the piece is falling
-     */
-    public void setPieceFalling(boolean pieceFalling) {
-        this.pieceFalling = pieceFalling;
-    }
 
     /**
      * Sets whether it is the AI's turn or not
      *
      * @param isAITurn whether it's the AI's turn
      */
-    public void setAITurn(boolean isAITurn) {
-        this.isAITurn = isAITurn;
-    }
 
-    /**
-     * Sets the winningPieces array list
-     *
-     * @param winningPieces the winning pieces array list
-     */
-    public void setWinningPieces(ArrayList<Coordinates> winningPieces) {
-        this.winningPieces = winningPieces;
-    }
 
     /**
      * Sets the isAiTurn field to true

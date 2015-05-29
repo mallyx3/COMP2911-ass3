@@ -13,7 +13,7 @@ public class ColumnView extends JPanel {
     private int colNum;
     private int[] row;
     //todo what does l represent? can we rename it to something more meaningful?
-    private int l = -1;
+    private int fallingPoint = -1;
     private int yFall = 570;
     private Board gameState;
     private boolean mouseClicked = false;
@@ -37,10 +37,10 @@ public class ColumnView extends JPanel {
         timeThing = new Timer(5, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 yFall = yFall + 6;
-                if (yFall > 670 - 110 * l) {
+                if (yFall > 670 - 110 * fallingPoint) {
 
                     pieceFalling = false;
-                    gameState.pieceFalling();
+                    gameState.setpieceFalling(false);
                 }
 
                 timeThing.stop();
@@ -89,77 +89,10 @@ public class ColumnView extends JPanel {
 
     }
 
-    /**
-     * @return the column number
-     */
-    public int getCol() {
-        return colNum;
-    }
+
 
     /**
-     * @return the row array
-     */
-    public int[] getRow() {
-        return row;
-    }
-    //todo - write javadoc. Not sure what field yFall represents
-
-    /**
-     * @return
-     */
-    public int getYFall() {
-        return yFall;
-    }
-
-    /**
-     * @return the state of the board
-     */
-    public Board getGameState() {
-        return gameState;
-    }
-
-    /**
-     * @return <code>true</code> if mouse is being clicked, or otherwise
-     * <code>false</code>
-     */
-    public boolean isMouseClicked() {
-        return mouseClicked;
-    }
-    //todo - write javadoc. Not sure what field mouseEntered represents
-
-    /**
-     * @return
-     */
-    public boolean isMouseEntered() {
-        return mouseEntered;
-    }
-
-    /**
-     * @return <code>true</code> if game is in colour blind mode, or otherwise
-     * <code>false</code>
-     */
-    public boolean isColourBlindMode() {
-        return colourBlindMode;
-    }
-
-    /**
-     * @return <code>true</code> if game piece is falling, or otherwise
-     * <code>false</code>
-     */
-    public boolean isPieceFalling() {
-        return pieceFalling;
-    }
-    //todo - write javadoc. Not sure what field timeThing represents
-
-    /**
-     * @return
-     */
-    public Timer getTimeThing() {
-        return timeThing;
-    }
-    //todo - write javadoc. Not sure what field g represents
-
-    /**
+     * Updates the column to new game state
      * @return
      */
     @Override
@@ -230,7 +163,7 @@ public class ColumnView extends JPanel {
                 }
                 g.fillOval(30, 670 - 110 * i, 90, 90);
             }
-            if (i == l && pieceFalling) {
+            if (i == fallingPoint && pieceFalling) {
                 newPiece.paintIcon(this, g, 30, yFall);
             } else {
                 if (row[i] != 0) {
@@ -252,12 +185,7 @@ public class ColumnView extends JPanel {
         }
     }
 
-    /**
-     * Calls the drop game piece animation on behalf of the AI
-     */
-    public void paintAITurn() {
-        paintPiece();
-    }
+
 
     /**
      * Starts the drop game piece animation
@@ -272,7 +200,7 @@ public class ColumnView extends JPanel {
 
             for (i = 0; i < ROW_SIZE && !painted; i++) {
                 if (row[i] == 0) {
-                    l = i;
+                    fallingPoint = i;
                     row[i] = gameState.getPlayer();
                     painted = true;
                     repaint();
@@ -281,12 +209,7 @@ public class ColumnView extends JPanel {
         }
     }
 
-    /**
-     * Changes the colours of all the game pieces to indicate game over.
-     */
-    public void paintWinPieces() {
-        repaint();
-    }
+
 
     /**
      * Resets the board

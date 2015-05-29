@@ -27,21 +27,4 @@ public class Coordinates {
         return column;
     }
 
-    /**
-     * Sets the row coordinate
-     *
-     * @param row the row coordinate
-     */
-    void setRow(int row) {
-        this.row = row;
-    }
-
-    /**
-     * Sets the column coordinate
-     *
-     * @param column the column coordinate
-     */
-    void setColumn(int column) {
-        this.column = column;
-    }
 }

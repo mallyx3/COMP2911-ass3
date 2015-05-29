@@ -77,12 +77,13 @@ public class MenuView extends JPanel {
     //todo - write javadoc. Not sure what the method does
 
     /**
+     * Paints the background of the main menu
      * @return
      */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ImageIcon bg = new ImageIcon(getClass().getResource("/Art/bg.png"));
+        ImageIcon bg = new ImageIcon(getClass().getResource("/Art/bglighter.png"));
         bg.paintIcon(this, g, 0, 0);
     }
 }

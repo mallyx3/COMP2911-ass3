@@ -9,11 +9,19 @@ import javax.swing.JPanel;
 public class SideView extends JPanel{
 	private Board gameState;
 	private boolean colourBlind;
-	
+	/**
+	 * Creates and updates the side menu in the game screen
+	 * @param newState Holds the game state for the game
+	 * @param colourBlind Flag for painting in ColourBlind mode
+	 */
 	public SideView(Board newState, boolean colourBlind){
 		gameState = newState;
 		this.colourBlind = colourBlind;
 	}
+	/**
+	 * Paints background of the side menu, and will update 
+	 * a visual guide for whose turn it is in the side menu
+	 */
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);

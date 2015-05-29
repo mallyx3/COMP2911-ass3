@@ -22,7 +22,11 @@ public class Board {
 	private boolean pieceFalling = false;
 	private boolean isAITurn = false;
 	private ArrayList<Coordinates> winningPieces = new ArrayList<Coordinates>();
-
+	/**
+	 * Sets up the back end for the board game, including
+	 * board grid, and the AI with default medium difficulty
+	 * @param numPlayers
+	 */
 	public Board(int numPlayers){
 		this.boardState = new int[DEFAULT_ROW_SIZE][DEFAULT_COL_SIZE];
 		this.colSize = DEFAULT_COL_SIZE;
@@ -31,7 +35,7 @@ public class Board {
 		numPieces = 0;
 		int i;
 		int j;
-		this.AI = new Player(0);
+		this.AI = new Player(1);
 		this.numPlayers = numPlayers;
 		if(numPlayers == 3){
 			winRequired = 3;
@@ -50,7 +54,13 @@ public class Board {
 
 
 
-	//need to check if numPieces is < total num of pieces (42 for default 7x6 board)
+	/**
+	 * Attempts to add piece to requested column
+	 * 
+	 * @param column
+	 * @return <code>true</code> if piece was added, or
+	 * <code>false</code> if addition failed
+	 */
 	public boolean addPiece(int column){
 		if(!isRunning()){
 			return false;
@@ -67,7 +77,7 @@ public class Board {
 				} else {
 					player = 1;
 				}
-				System.out.printf("%d\n", player);
+
 				boardState[i][column] = player;
 				this.print();
 				numPieces++;
@@ -77,7 +87,14 @@ public class Board {
 		//this.print();
 		return false;
 	}
-
+	/**
+	 * Checks if the current player has won.
+	 * Will fill winningPieces with the 4 in a row
+	 * if they won.
+	 * 
+	 * @return <code>true</code> if player has won,
+	 * <code>false</code> if they haven't
+	 */
 	public boolean hasWon(){
 		winningPieces = new ArrayList<Coordinates>();
 		int i;
@@ -176,6 +193,11 @@ public class Board {
 		winningPieces.clear();
 		return false;
 	}
+	/**
+	 * Will check if board is full and no moves left
+	 * @return <code>true</code> if no moves left,
+	 * <code>false</code> if moves are available.
+	 */
 	public boolean checkDraw(){
 		if(numPieces == 42){
 			return true;
@@ -183,6 +205,9 @@ public class Board {
 			return false;
 		}
 	}
+	/**
+	 * Prints out the board to terminal
+	 */
 	public void print(){
 		int i;
 		int j;
@@ -195,29 +220,53 @@ public class Board {
 		System.out.println("");
 		}
 	}
+	/**
+	 * 
+	 * @return current player
+	 */
 	public int getPlayer(){
 		return player;
 	}
-
+	/**
+	 * 
+	 * @return <code>true</code> if single player game,
+	 * <code>false</code> if multiplayer game.
+	 */
 	public boolean isAIGame(){
 		return AIGame;
 	}
+	/**
+	 * Completes AI move and turns off isAITurn flag
+	 * @return move made by the AI
+	 */
 	public int getAITurn(){
 		isAITurn = false;
 		return AI.makeMove(boardState);
 	}
+	/**
+	 * Toggles between an AIGame and multiplayer game
+	 * Only works if game is not running (ie. in setup menu)
+	 * @param AItoggle sets flag for AIGame
+	 */
 	public void toggleAIGame(boolean AItoggle){
 		if(!gameRunning){
 			AIGame = AItoggle;
 		}
 	}
+	/**
+	 * Starts and stops the game
+	 * Also resets the player turn counter
+	 * @param running starts or stops the game
+	 */
 	public void toggleGameState(boolean running){
 		
-		player = numPlayers;
+		player = 0;
 		gameRunning = running;
 		
 	}
-	
+	/**
+	 * Resets the game with a cleared board
+	 */
 	public void resetGame(){
 		gameRunning = true;
 		for (int i = 0; i < rowSize; i++){
@@ -229,16 +278,34 @@ public class Board {
 		numPieces = 0;
 		player = 0;
 	}
+	/**
+	 * 
+	 * @return <code>true</code> if game is running,
+	 * <code>false</code> if its stopped
+	 */
 	public boolean isRunning(){
 		return gameRunning;
 	}
+	/**
+	 * 
+	 * @return number of players in the game
+	 */
 	public int getNumPlayers(){ return numPlayers; }
 	
-
+	/**
+	 * 
+	 * @param difficulty sets the AI difficulty
+	 */
 	public void setAI(int difficulty){
 		AI.setDifficulty(difficulty);
 	}
-	
+	/**
+	 * Checks a piece to see if its one of the winning pieces
+	 * @param column
+	 * @param row
+	 * @return <code>true</code> if a winning piece,
+	 * <code>false</code> if not or game hasn't finished
+	 */
 	public boolean isWinPiece(int column, int row){
 		if(winningPieces.size() == 0){
 			return false;
@@ -250,20 +317,32 @@ public class Board {
 		}
 		return false;
 	}
-	public void pieceFalling(){
-		if(pieceFalling){
-			pieceFalling = false;
-		} else{
-			pieceFalling = true;
-		}
+	/**
+	 * Toggles whether a piece is falling in any column
+	 */
+	public void setpieceFalling(boolean falling){
+		pieceFalling = falling;
 	}
+	/**
+	 * Sets gameState to the AI's turn
+	 */
 	public void makeAITurn(){
 		isAITurn = true;			
 	}
+	/**
+	 * 
+	 * @return <code>true</code> if AI's turn,
+	 * <code>false</code> if it isn't
+	 */
 	public boolean ifAITurn(){
 		return isAITurn;
 	}
-	public boolean ifFalling(){
+	/**
+	 * 
+	 * @return <code>true</code> if piece falling,
+	 * <code>false</code> if no piece falling.
+	 */
+	public boolean getPieceFalling(){
 		return pieceFalling;
 	}
 }

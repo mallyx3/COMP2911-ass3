@@ -17,7 +17,16 @@ import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class MenuView extends JPanel{
-
+	/**
+	 * Organizes and paints the menu screen
+	 * @param singlePlayer button starts a one player game with an AI
+	 * @param multiPlayer button starts a two player game
+	 * @param threePlayer button starts a three player game
+	 * @param colourBlind button sets game to ColourBlind friendly
+	 * @param easy button sets AI difficulty to easy
+	 * @param medium button sets AI difficulty to medium
+	 * @param hard button sets AI difficulty to hard
+	 */
 	public MenuView(JButton singlePlayer, JButton multiPlayer, JButton threePlayer, JButton colourBlind, JButton easy, JButton medium, JButton hard){
 		super();
 		setPreferredSize(new Dimension(1250,800));
@@ -73,6 +82,7 @@ public class MenuView extends JPanel{
 
 		revalidate();
 	}
+	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);

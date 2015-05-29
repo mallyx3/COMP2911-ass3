@@ -42,7 +42,9 @@ public class BoardView extends JFrame{
 	private JButton colourBlind = new JButton(new ImageIcon(getClass().getResource("/Art/colourblind.png")));
 	private Container Columns;
 	private Timer AIDelay;
-	
+	/**
+	 * Sets up the JFrame for the Connect 4 Window
+	 */
 	public BoardView(){
 		Columns = getContentPane();
 		Columns.setLayout(new BoxLayout(Columns, BoxLayout.X_AXIS));
@@ -55,7 +57,12 @@ public class BoardView extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	public void initGameView(boolean AIGame, int numPlayers){
+	/**
+	 * Sets up the game screen to play on
+	 * @param AIGame used to set as a SinglePlayer or MultiPlayer game
+	 * @param numPlayers used to set 2 or 3 players
+	 */
+	public void initBView(boolean AIGame, int numPlayers){
 		gameState = new Board(numPlayers);
 		gameState.toggleAIGame(AIGame);
 		gameState.setAI(AISetting);
@@ -108,7 +115,7 @@ public class BoardView extends JFrame{
 		resetButton.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				if(!gameState.ifFalling()){
+				if(!gameState.getPieceFalling()){
 					for(int i = 0; i < 7; i++){
 						ColumnList.get(i).resetBoard();
 						gameState.resetGame();
@@ -145,39 +152,38 @@ public class BoardView extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	public static void main(String[] args) {
-
-        EventQueue.invokeLater(new Runnable() {
-        
-            @Override
-            public void run() {
-                BoardView ex = new BoardView();
-               
-                ex.setVisible(true);
-                ex.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }
-        });
-    }
 	
+	/**
+	 * Sets up the menu screen
+	 */
 	public void initMenuScreen(){
 		
 		test = new MenuView(singlePlayer, multiPlayer, threePlayer, colourBlind, easy, medium, hard);
 		Columns.add(test);
 
 	}
+	/**
+	 * Removes the menu screen to setup a single player game
+	 */
 	public void initSinglePlayerGame(){
 		
 		test.setVisible(false);
-		initGameView(true, 2);
+		initBView(true, 2);
 	
 	}
-	
+	/**
+	 * Removes the menu screen to setup a multi player game
+	 * @param numPlayers sets number of players to 2 or 3
+	 */
 	public void initMultiPlayerGame(int numPlayers){
 		
 		test.setVisible(false);
-		initGameView(false, numPlayers);
+		initBView(false, numPlayers);
 		
 	}
+	/**
+	 * Adds action commands to buttons used in menu and game screens
+	 */
 	public void initButtons(){
 		
 		singlePlayer.addActionListener(new ActionListener(){

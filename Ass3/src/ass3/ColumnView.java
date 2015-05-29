@@ -23,16 +23,23 @@ public class ColumnView extends JPanel{
 	private boolean pieceFalling = false;
 	private Timer timeThing;
 	//private ArrayList<Dimensions> CircleSpots = new ArrayList<Dimensions>();
+	/**
+	 * Paints and updates a column in the gamescreen
+	 * @param colNum designates which column
+	 * @param State holds the Board gameState 
+	 * @param colourBlind sets the flag to paint in ColourBlind mode
+	 */
 	public ColumnView(int colNum, Board State, boolean colourBlind){
 		super();
 		
 		timeThing = new Timer(5,new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				yFall = yFall + 6;
+				gameState.setpieceFalling(true);
 				if(yFall > 670 - 110*fallingPoint){
 
 					pieceFalling = false;
-					gameState.pieceFalling();
+					gameState.setpieceFalling(false);
 				}
 
 				timeThing.stop();
@@ -76,6 +83,9 @@ public class ColumnView extends JPanel{
 		});
 		
 	}
+	/**
+	 * Updates the column with current pieces 
+	 */
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -179,13 +189,17 @@ public class ColumnView extends JPanel{
 		}
 	}
 	
-	
+	/**
+	 * When called, will request the backend Board to
+	 * add a piece to this column, will then repaint column
+	 * if successful
+	 */
 	public void paintPiece(){
 		if(gameState.addPiece(colNum)){
 			boolean painted = false;
 			yFall = 20;
 			pieceFalling = true;
-			gameState.pieceFalling();
+			gameState.setpieceFalling(true);
 			for(int i = 0; i < 6 && !painted;i++){
 				if(row[i] == 0){
 					fallingPoint = i;
@@ -196,6 +210,9 @@ public class ColumnView extends JPanel{
 			}
 		}
 	}
+	/**
+	 * Resets column to an empty column
+	 */
 	public void resetBoard(){
 		for(int i = 0;i < 6; i++){
 			row[i] = 0;

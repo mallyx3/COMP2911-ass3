@@ -10,15 +10,22 @@ public class Player {
 	private final int DIFFICULTY_MEDIUM = 1;
 
 	//Create AI player with give difficulty setting
-	public Player(int difficulty){
-		
+	/**
+	 * Constructs a player with the provided difficulty setting
+	 * Assumes difficulty provided is >= 0 and <= 2
+	 * @param difficulty is the difficulty setting
+	 */
+	public Player(int difficulty){		
 		this.difficulty = difficulty;
-
-		
 	}
 
 	
-
+	/**
+	 * Given a board by the main Back End, will find an 
+	 * optimal move based on the difficulty setting of the AI
+	 * @param board is the board used to find move
+	 * @return the column AI chooses
+	 */
 	public int makeMove(int board[][]){
 		if (difficulty == DIFFICULTY_EASY) {
 			//Attempts to get centre piece
@@ -269,9 +276,22 @@ public class Player {
 
 
 	
-	
+	/**
+	 * Updates the difficulty
+	 * @param newDifficulty
+	 */
 	public void setDifficulty(int newDifficulty) {this.difficulty = newDifficulty; }
-	
+	/**
+	 * Tests whether a move made by the given player will result
+	 * in a victory, with potential blank spaces for testing
+	 * a player can get 3/4 pieces in a row
+	 * @param testBoard the board used to test
+	 * @param column the tested move being made
+	 * @param player the player which is being tested for victory
+	 * @param blankPieces the number of blank spaces allowed
+	 * @return <code>true</code> if a victory would occur,
+	 * <code>false</code> if no victory.
+	 */
 	public boolean findPiece(int testBoard[][],int column, int player, int blankPieces){
 
 		int j;
@@ -304,7 +324,16 @@ public class Player {
 		return false;
 	}
 		
-	
+	/**
+	 * Tests whether a player will win if a piece is placed above the next row
+	 * or less with blank pieces
+	 * @param board the board used to test
+	 * @param column the tested move being made
+	 * @param player the player which is being tested for victory
+	 * @param blankPieces the number of blank spaces allowed
+	 * @return <code>true</code> if a victory would occur,
+	 * <code>false</code> if no victory.
+	 */
 	public boolean testPiece(int board[][], int column, int player, int blankPieces){
 		int i;
 		boolean foundCheck = false;
@@ -333,6 +362,13 @@ public class Player {
 		}
 		return false;
 	}
+	/**
+	 * Checks for victory with a testing board for a player
+	 * @param boardState the test board
+	 * @param player the player being tested
+	 * @return <code>true</code> if a player would win,
+	 * <code>false</code> if they don't
+	 */
 	public boolean hasWon(int[][] boardState, int player){
 
 		int i;
@@ -427,6 +463,15 @@ public class Player {
 		}		
 		return false;
 	}
+	/**
+	 * Tests for a victory for a player with permitted blank spaces,
+	 * used to stop 3/4 pieces or any double win condition strategies
+	 * @param board the test board
+	 * @param player the player being tested
+	 * @param blankPieces the number of permitted blank spaces
+	 * @return <code>true</code> if a victory is found,
+	 * <code>false</code> if no victory found
+	 */
 	public boolean testForWin(int board[][], int player, int blankPieces){
 		int i;
 		int j;
